@@ -9,10 +9,10 @@ ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
-deploy_default = "rsync"
+deploy_default = "push"
 
 # This will be configured for you when you run config_deploy
-deploy_branch  = "gh-pages"
+deploy_branch  = "master"
 
 ## -- Misc Configs -- ##
 
@@ -22,7 +22,7 @@ blog_index_dir  = 'source'    # directory for your blog's index page (if you put
 deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 #posts_dir       = "_posts"    # directory for blog files
-posts_dir       = "org_posts"
+posts_dir       = "_posts_org"
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "org"  # default new post file extension when using the new_post task
 new_page_ext    = "org"  # default new page file extension when using the new_page task
