@@ -1,0 +1,13 @@
+* This is the data for my personal blog
+  It is automatically transformed by Octopress/Org-mode into a static
+  site whenever I push this repository to GitHub.
+
+* License
+  The following directories and their contents are Copyright under
+  license *CC BY-NC-SA 3.0*:
+
+  - _posts/
+  - images/
+  - asserts/
+
+  All other directories and files are MIT Licensed.
