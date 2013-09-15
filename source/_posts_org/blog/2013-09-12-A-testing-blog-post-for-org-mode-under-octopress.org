@@ -1,0 +1,244 @@
+#+OPTIONS: num:t
+#+LANGUAGE: en
+#+FILETAGS: :org_mode:octopress:
+
+#+BEGIN_HTML
+---
+layout: post
+title: "A testing blog post for org-mode under octopress"
+date: 2013-09-12 18:18
+comments: true
+published: true
+categories: [org_mode, octopress]
+---
+#+END_HTML
+
+* Header
+  test text
+
+  test text test text test text test text test text test text test
+  text test text test text test text
+* TODO Table
+  :LOGBOOK:
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+  #+CAPTION: a simple table
+  | Name  | Phone | Age |
+  |-------+-------+-----|
+  | Peter |  1234 |  17 |
+  | Anna  |  4321 |  25 |
+
+  #+CAPTION: a simple table with a long name
+  #+LABEL:   tab:demo-table
+  | Sede      | Max cites | H-index |
+  |-----------+-----------+---------|
+  | Chile     |    257.72 |   21.39 |
+  | Leeds     |    165.77 |   19.68 |
+  | Sao Paolo |     71.00 |   11.50 |
+  | Stockholm |    134.19 |   14.33 |
+  | Morelia   |    257.56 |   17.67 |
+
+* TODO Code
+  :LOGBOOK:
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+** code surround by '#+BEGIN_EXAMPLE'
+   #+BEGIN_EXAMPLE
+   def show
+     @widget = Widget(params[:id])
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @widget }
+     end
+   end
+   #+END_EXAMPLE
+
+** code surround by '#+BEGIN_SRC'
+   # {% highlight ruby %}
+   #+BEGIN_SRC ruby
+   def show
+     @widget = Widget(params[:id])
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @widget }
+     end
+   end
+   #+END_SRC
+   # {% endhighlight %}
+
+** code surround by '#+BEGIN_SRC', enable number line and inner reference
+   #+BEGIN_SRC emacs-lisp -n -r
+   (save-excursion                  (ref:sc)
+      (goto-char (point-min))       (ref:jump)
+   #+END_SRC
+   In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]]
+   jumps to point-min.
+
+** TODO code highlight by pygments
+   :LOGBOOK:
+   - State "TODO"       from ""           [2013-09-15 Sun 14:55]
+   :END:
+   # {% highlight ruby %}
+   #+BEGIN_SRC ruby
+   def show
+     @widget = Widget(params[:id])
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @widget }
+     end
+   end
+   #+END_SRC
+   # {% endhighlight %}
+
+* Footnote
+  thie is a footnote[fn:1]
+
+  this is another footnote[fn:2]
+* Links
+  :LOGBOOK:
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+  link to [[http:2013-09-12-A-testing-blog-post-for-linking.html][aother post]]
+* Image
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-15 Sun 15:56]
+  - State "TODO"       from ""           [2013-09-14 Sat 21:49]
+  :END:
+** independent image
+   #+CAPTION: demo image cowfish
+   #+ATTR_HTML: :title demo image cowfish
+   [[file:{{ site.url }}/images/head_cowfish.jpg]]
+
+   test text test text test text test text test text test text test
+
+** image surround by text
+   # #+ATTR_HTML: :title demo image cowfish :align left
+   #+CAPTION: demo image cowfish
+   #+ATTR_HTML: :alt cat/spider image :title demo image cowfish :align left
+   [[file:{{ site.url }}/images/head_cowfish.jpg]]
+
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   text test text test text test text test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test
+
+* Attachment
+  [[file:{{%20site.url%20}}/downloads/demo_attachment_Texlive_%E5%AE%98%E6%96%B9%E6%8C%87%E5%8D%97_zh-cn.pdf][download demo attachment]]
+* Auto generated image
+** ditaa
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-15 Sun 15:55]
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+  #+begin_src ditaa :file autogenimg/20130912-demo_ditaa.png :cmdline -r -s 0.8
+       +----------+ edit +----------+   input +----------+ compile +----------+
+       |  cPNK    |      |  cRED    |         |   cGRE   |         |  cPNK    |
+       | refined  |<-----+ h,cpp    +-------->+ compiler,+-------->+Executable|
+       |   h,cpp  |      |          |         | linker   |         |   File   |
+       | {s}      |      |  {io}    |         |          |         |    {s}   |
+       +----------+      +----+-----+         +----------+         +----------+
+                              | input
+                              v
+                         +----------+
+                         |  cGRE    |
+                         | doxygen  |
+                         |          |
+                         +----+-----+
+                              | process
+                              v
+                         +----------+
+                         |  cPNK    |
+                         | Doxgen   |
+                         | Document |
+                         |    {d}   |
+                         +----------+
+
+  #+end_src
+
+  #+RESULTS:
+  [[file:autogenimg/20130912-demo_ditaa.png]]
+
+** dot
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-15 Sun 15:55]
+   - State "TODO"       from ""           [2013-09-14 Sat 21:24]
+   :END:
+   #+begin_src dot :file autogenimg/20130912-demo_dot.png :cmdline -Kdot -Tpng   digraph G {
+   digraph G {
+     size="8,6"
+     ratio=expand
+     edge [dir=both]
+     plcnet [shape=box, label="PLC Network"]
+     subgraph cluster_wrapline {
+       label="Wrapline Control System"
+       color=purple
+       subgraph {
+       rank=same
+       exec
+       sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+       }
+       edge[style=dotted, dir=none]
+       exec -> opserver
+       exec -> db
+       plc -> exec
+       edge [style=line, dir=both]
+       exec -> sharedmem
+       sharedmem -> db
+       plc -> sharedmem
+       sharedmem -> opserver
+     }
+     plcnet -> plc [constraint=false]
+     millwide [shape=box, label="Millwide System"]
+     db -> millwide
+
+     subgraph cluster_opclients {
+       color=blue
+       label="Operator Clients"
+       rankdir=LR
+       labelloc=b
+       node[label=client]
+       opserver -> client1
+       opserver -> client2
+       opserver -> client3
+     }
+   }
+   #+end_src
+** plantuml
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-15 Sun 15:56]
+   - State "TODO"       from ""           [2013-09-14 Sat 21:39]
+   :END:
+   #+begin_src plantuml :file autogenimg/20130912-demo_plantuml.png
+   title Example Sequence Diagram
+   activate Client
+   Client -> Server: Session Initiation
+   note right: Client requests new session
+   activate Server
+   Client <-- Server: Authorization Request
+   note left: Server requires authentication
+   Client -> Server: Authorization Response
+   note right: Client provides authentication details
+   Server --> Client: Session Token
+   note left: Session established
+   deactivate Server
+   Client -> Client: Saves token
+   deactivate Client
+   #+end_src
+** TODO latex
+** TODO math
+   :LOGBOOK:
+   - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+   :END:
+
+* Footnotes
+
+[fn:1] http://www.footnote.com
+
+[fn:2] http://www.footnote2.com

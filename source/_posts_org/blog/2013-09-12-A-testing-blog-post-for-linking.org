@@ -1,0 +1,20 @@
+#+LANGUAGE: en
+#+FILETAGS: :org_mode:octopress:
+
+#+BEGIN_HTML
+---
+layout: post
+title: "A testing blog post for linking"
+date: 2013-09-12 18:18
+comments: true
+published: true
+categories: [org_mode, octopress]
+---
+#+END_HTML
+
+* Header in another post
+  test text test text test text test text test text test text test
+  text test text test text test text
+
+  test text test text test text test text test text test text test
+  text test text test text test text
