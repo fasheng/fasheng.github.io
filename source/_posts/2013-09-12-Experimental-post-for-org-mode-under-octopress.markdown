@@ -1,0 +1,426 @@
+---
+layout: post
+title: "Experimental post for org-mode under octopress"
+date: 2013-09-12 18:18
+comments: true
+published: true
+categories: [org_mode, octopress]
+styles: [math, table]
+---
+
+<p>
+<b>Excerpts:</b>
+Here is excerpts.
+test text test text test text test text test text test text test
+text test text test text test text
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Header</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+test text
+</p>
+
+<p>
+<b>test text</b> test text test text test text test text test text test
+<del>text test text test text test text</del>
+test text test text test text test <i>text test text test text test</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Table</h2>
+<div class="outline-text-2" id="text-2">
+<div></div>
+<table border="">
+<caption>a simple table</caption>
+
+<colgroup>
+<col class="left"/>
+
+<col class="right"/>
+
+<col class="right"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Name</th>
+<th scope="col" class="right">Phone</th>
+<th scope="col" class="right">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Peter</td>
+<td class="right">1234</td>
+<td class="right">17</td>
+</tr>
+
+<tr>
+<td class="left">Anna</td>
+<td class="right">4321</td>
+<td class="right">25</td>
+</tr>
+</tbody>
+</table>
+
+<div></div>
+<table id="tab:demo-table-2" border="">
+<caption>a simple table with a very very very long name</caption>
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
+
+<col class="right"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sede</th>
+<th scope="col" class="left">Max cites</th>
+<th scope="col" class="right">H-index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Chile</td>
+<td class="left">257.72</td>
+<td class="right">21.39</td>
+</tr>
+
+<tr>
+<td class="left">Leeds</td>
+<td class="left">165.77</td>
+<td class="right">19.68</td>
+</tr>
+
+<tr>
+<td class="left">Sao Paolo</td>
+<td class="left">71.00</td>
+<td class="right">11.50</td>
+</tr>
+
+<tr>
+<td class="left">Stockholm</td>
+<td class="left">134.19</td>
+<td class="right">14.33</td>
+</tr>
+
+<tr>
+<td class="left">Morelia</td>
+<td class="left">257.56</td>
+<td class="right">17.67</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Block quotes</h2>
+<div class="outline-text-2" id="text-3">
+<p class="verse">
+Great clouds overhead <br/>
+Tiny black birds rise and fall <br/>
+Snow covers Emacs <br/>
+&#xa0;<br/>
+&#x2013; AlexSchroeder <br/>
+</p>
+
+<blockquote>
+<p>
+Everything should be made as simple as possible,
+but not any simpler &#x2013; Albert Einstein
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Code</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> code surround by '#+BEGIN_EXAMPLE'</h3>
+<div class="outline-text-3" id="text-4-1">
+<pre class="example">
+def show
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> code surround by '#+BEGIN_SRC'</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-ruby"><span style="color: #00bfff;">def</span> <span style="color: #daa520;">show</span>
+  <span style="color: #4eee94;">@widget</span> = <span style="color: #98f5ff;">Widget</span>(params[<span style="color: #a2cd5a;">:id</span>])
+  respond_to <span style="color: #00bfff;">do</span> |format|
+    format.html <span style="color: #7f7f7f;"># </span><span style="color: #7f7f7f;">show.html.erb</span>
+    format.json { render <span style="color: #a2cd5a;">json</span>: <span style="color: #4eee94;">@widget</span> }
+  <span style="color: #00bfff;">end</span>
+<span style="color: #00bfff;">end</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> code surround by '#+BEGIN_SRC', enable number line and inner reference</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1: </span>(<span style="color: #00bfff;">save-excursion</span></span>
+<span id="coderef-jump" class="coderef-off"><span class="linenr">2: </span>   (goto-char (point-min))</span>
+</pre>
+</div>
+<p>
+In line <a href="#coderef-sc"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-sc');" onmouseout="CodeHighlightOff(this, 'coderef-sc');">1</a> we remember the current position.  <a href="#coderef-jump"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-jump');" onmouseout="CodeHighlightOff(this, 'coderef-jump');">Line 2</a>
+jumps to point-min.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> code highlight by pygments</h3>
+<div class="outline-text-3" id="text-4-4">
+</div>
+<div id="outline-container-sec-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1"><span class="section-number-4">4.4.1</span> syntax by backtick</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<p>
+```ruby
+def show
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+```
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4-2" class="outline-4">
+<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> syntax by 'codeblock'</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+{% codeblock lang:ruby %}
+def show
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+{% endcodeblock %}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-4-3" class="outline-4">
+<h4 id="sec-4-4-3"><span class="section-number-4">4.4.3</span> syntax by 'highlight'</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<p>
+{% highlight ruby linenos %}
+def show
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+{% endhighlight %}
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Footnote and reference</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+thie is a reference<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<p>
+this is another reference<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Links</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+link to <a href="http:2013-09-12-Test-post.html">aother post</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Image</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> independent image</h3>
+<div class="outline-text-3" id="text-7-1">
+
+<div class="figure">
+<p><img src="../images_post/head_cowfish.jpg" title="demo image cowfish" width="300" height="250" alt="head_cowfish.jpg"/></p>
+<p>demo image cowfish</p>
+</div>
+
+<p>
+test text test text test text test text test text test text test
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> image surround by text</h3>
+<div class="outline-text-3" id="text-7-2">
+
+<div class="figure">
+<p><img src="../images_post/head_cowfish.jpg" title="demo image cowfish" class="left" width="300" height="250" alt="head_cowfish.jpg"/></p>
+<p><b>demo image cowfish</b></p>
+</div>
+
+<p>
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+test text test text test text test text test text test text test
+text test text test text test text test text test text test text
+test text test text test text test test text test text test text
+test text test text test text test test text test text test text
+test text test text test text test test text test text test text
+test text test text test text test
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Attachment</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<a href="../downloads/demo_attachment_Texlive_%E5%AE%98%E6%96%B9%E6%8C%87%E5%8D%97_zh-cn.pdf">download demo attachment</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Math</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> latex fragment</h3>
+<div class="outline-text-3" id="text-9-1">
+\begin{equation}
+\Pr(X_t=j|X_{t-1}=i) = \frac{j(j-1)}{2}\Big(\frac{i}{N}\Big)^j\Big(\frac{N-i}{N}\Big)^{n-j}
+\end{equation}
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> latex source code</h3>
+<div class="outline-text-3" id="text-9-2">
+\begin{equation}
+\Pr(X_t=j|X_{t-1}=i) = \frac{j(j-1)}{2}\Big(\frac{i}{N}\Big)^j\Big(\frac{N-i}{N}\Big)^{n-j}
+\end{equation}
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Auto generated image</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> latex result to image file</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+image background will be effect by your emacs environtment
+</p>
+
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_latex.png"  alt="20130912-demo_latex.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> ditaa</h3>
+<div class="outline-text-3" id="text-10-2">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_ditaa.png"  alt="20130912-demo_ditaa.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> dot</h3>
+<div class="outline-text-3" id="text-10-3">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_dot.png"  alt="20130912-demo_dot.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-4" class="outline-3">
+<h3 id="sec-10-4"><span class="section-number-3">10.4</span> plantuml</h3>
+<div class="outline-text-3" id="text-10-4">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_plantuml.png"  alt="20130912-demo_plantuml.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-5" class="outline-3">
+<h3 id="sec-10-5"><span class="section-number-3">10.5</span> asymptote</h3>
+<div class="outline-text-3" id="text-10-5">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_asy.png"  alt="20130912-demo_asy.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-6" class="outline-3">
+<h3 id="sec-10-6"><span class="section-number-3">10.6</span> r language</h3>
+<div class="outline-text-3" id="text-10-6">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_r.png"  alt="20130912-demo_r.png"/></p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-7" class="outline-3">
+<h3 id="sec-10-7"><span class="section-number-3">10.7</span> octave</h3>
+<div class="outline-text-3" id="text-10-7">
+
+<div class="figure">
+<p><img src="../images_autogen/20130912-demo_octave.png"  alt="20130912-demo_octave.png"/></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<a href="http://www.footnote.com">http://www.footnote.com</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<a href="http://www.footnote2.com">http://www.footnote2.com</a>, this is a long description for the footnote
+</p></div>
+
+
+</div>
+</div>

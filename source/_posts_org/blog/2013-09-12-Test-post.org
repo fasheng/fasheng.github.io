@@ -4,7 +4,7 @@
 #+BEGIN_HTML
 ---
 layout: post
-title: "A testing blog post for linking"
+title: "Test post"
 date: 2013-09-12 18:18
 comments: true
 published: true
@@ -14,7 +14,6 @@ categories: [org_mode, octopress]
 
 * Header in another post
   test text test text test text test text test text test text test
-  text test text test text test text
 
   test text test text test text test text test text test text test
   text test text test text test text

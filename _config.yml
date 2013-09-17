@@ -2,13 +2,15 @@
 #      Main Configs       #
 # ----------------------- #
 
-#url: http://fasheng.github.io
-url: '' # used for preview
+url: http://fasheng.github.io
+#url: '' # used for preview
 title: fasheng的博客
 subtitle: 自在  平和  共一
 author: Xu FaSheng
 simple_search: http://google.com/search
 description:
+
+timezone: Asia/Shanghai 
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -36,10 +38,11 @@ plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
 category_title_prefix: "Category: "
-markdown: rdiscount
-#markdown: redcarpet
-#safe: true
 safe: false
+#markdown: redcarpet
+markdown: rdiscount
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 rdiscount:
   extensions:
     - autolink
@@ -48,7 +51,7 @@ rdiscount:
 pygments: true # default python pygments have been replaced by pygments.rb
 #pygments: false # default python pygments have been replaced by pygments.rb
 
-paginate: 36           # Posts per page on the blog index
+paginate: 1           # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles

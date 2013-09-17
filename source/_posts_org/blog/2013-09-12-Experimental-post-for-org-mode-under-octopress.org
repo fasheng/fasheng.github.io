@@ -1,0 +1,378 @@
+#+FILETAGS: :org_mode:octopress:
+#+OPTIONS: num:t
+#+LANGUAGE: en
+
+#+BEGIN_HTML
+---
+layout: post
+title: "Experimental post for org-mode under octopress"
+date: 2013-09-12 18:18
+comments: true
+published: true
+categories: [org_mode, octopress]
+styles: [math, table]
+---
+#+END_HTML
+
+*Excerpts:*
+Here is excerpts.
+test text test text test text test text test text test text test
+text test text test text test text
+
+  # #+HTML: <!--more-->
+
+* Header
+  test text
+
+  *test text* test text test text test text test text test text test
+  +text test text test text test text+
+  test text test text test text test /text test text test text test/
+* Table
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-17 Tue 09:56]
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+
+  #+HTML: <div></div>
+  #+CAPTION: a simple table
+  | Name  | Phone | Age |
+  |-------+-------+-----|
+  | Peter |  1234 |  17 |
+  | Anna  |  4321 |  25 |
+
+  #+HTML: <div></div>
+  #+CAPTION: a simple table with a very very very long name
+  #+LABEL: tab:demo-table-2
+  | <l>       | <l>       |         |
+  | Sede      | Max cites | H-index |
+  |-----------+-----------+---------|
+  | Chile     | 257.72    |   21.39 |
+  | Leeds     | 165.77    |   19.68 |
+  | Sao Paolo | 71.00     |   11.50 |
+  | Stockholm | 134.19    |   14.33 |
+  | Morelia   | 257.56    |   17.67 |
+
+* Block quotes
+  #+BEGIN_VERSE
+  Great clouds overhead
+  Tiny black birds rise and fall
+  Snow covers Emacs
+
+  -- AlexSchroeder
+  #+END_VERSE
+
+  #+BEGIN_QUOTE
+  Everything should be made as simple as possible,
+  but not any simpler -- Albert Einstein
+  #+END_QUOTE
+
+* Code
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-16 Mon 20:40]
+  - State "TODO"       from ""           [2013-09-16 Mon 16:45]
+  - State "DONE"       from "TODO"       [2013-09-16 Mon 11:20]
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+** code surround by '#+BEGIN_EXAMPLE'
+   #+BEGIN_EXAMPLE
+   def show
+     @widget = Widget(params[:id])
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @widget }
+     end
+   end
+   #+END_EXAMPLE
+
+** code surround by '#+BEGIN_SRC'
+   #+BEGIN_SRC ruby
+   def show
+     @widget = Widget(params[:id])
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @widget }
+     end
+   end
+   #+END_SRC
+
+** code surround by '#+BEGIN_SRC', enable number line and inner reference
+   #+BEGIN_SRC emacs-lisp -n -r
+   (save-excursion                  (ref:sc)
+      (goto-char (point-min))       (ref:jump)
+   #+END_SRC
+   In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]]
+   jumps to point-min.
+
+** code highlight by pygments
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-16 Mon 11:20]
+   - State "TODO"       from ""           [2013-09-15 Sun 14:55]
+   :END:
+*** syntax by backtick
+    ```ruby
+    def show
+      @widget = Widget(params[:id])
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @widget }
+      end
+    end
+    ```
+
+*** syntax by 'codeblock'
+    {% codeblock lang:ruby %}
+    def show
+      @widget = Widget(params[:id])
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @widget }
+      end
+    end
+    {% endcodeblock %}
+*** syntax by 'highlight'
+    {% highlight ruby linenos %}
+    def show
+      @widget = Widget(params[:id])
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @widget }
+      end
+    end
+    {% endhighlight %}
+
+* Footnote and reference
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-16 Mon 21:59]
+  - State "TODO"       from ""           [2013-09-16 Mon 13:23]
+  :END:
+  thie is a reference[fn:1]
+
+  this is another reference[fn:2]
+* Links
+  :LOGBOOK:
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+  link to [[http:2013-09-12-Test-post.html][aother post]]
+* Image
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-17 Tue 09:53]
+  - State "TODO"       from ""           [2013-09-16 Mon 13:23]
+  - State "DONE"       from "TODO"       [2013-09-15 Sun 15:56]
+  - State "TODO"       from ""           [2013-09-14 Sat 21:49]
+  :END:
+** independent image
+   #+CAPTION: demo image cowfish
+   #+ATTR_HTML: :title demo image cowfish :width 300 :height 250
+   [[file:../images_post/head_cowfish.jpg]]
+
+   test text test text test text test text test text test text test
+
+** image surround by text
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-17 Tue 08:57]
+   - State "TODO"       from ""           [2013-09-17 Tue 08:44]
+   :END:
+   #+CAPTION: *demo image cowfish*
+   #+ATTR_HTML: :title demo image cowfish :class left :width 300 :height 250
+   [[file:../images_post/head_cowfish.jpg]]
+
+   # #+HTML: {% img left ../images_post/head_cowfish.jpg 300 350 demo image cowfish %}
+
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   test text test text test text test text test text test text test
+   text test text test text test text test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test test text test text test text
+   test text test text test text test
+
+* Attachment
+  [[file:../downloads/demo_attachment_Texlive_%E5%AE%98%E6%96%B9%E6%8C%87%E5%8D%97_zh-cn.pdf][download demo attachment]]
+* Math
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-16 Mon 16:52]
+  - State "TODO"       from ""           [2013-09-16 Mon 16:34]
+  - State "DONE"       from "TODO"       [2013-09-16 Mon 10:01]
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+** latex fragment
+   #+OPTIONS: tex:t          Do the right thing automatically (MathJax)
+
+   \begin{equation}
+   \Pr(X_t=j|X_{t-1}=i) = \frac{j(j-1)}{2}\Big(\frac{i}{N}\Big)^j\Big(\frac{N-i}{N}\Big)^{n-j}
+   \end{equation}
+
+** latex source code
+   #+header: :exports results :results raw
+   #+begin_src latex
+   \begin{equation}
+   \Pr(X_t=j|X_{t-1}=i) = \frac{j(j-1)}{2}\Big(\frac{i}{N}\Big)^j\Big(\frac{N-i}{N}\Big)^{n-j}
+   \end{equation}
+   #+end_src
+
+* Auto generated image
+** latex result to image file
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-15 Sun 23:16]
+   :END:
+   image background will be effect by your emacs environtment
+
+   #+OPTIONS: LaTeX:dvipng
+
+   #+header: :file ../images_autogen/20130912-demo_latex.png
+   #+header: :exports results :results raw
+   #+begin_src latex
+   \begin{equation}
+   \Pr(X_t=j|X_{t-1}=i) = \frac{j(j-1)}{2}\Big(\frac{i}{N}\Big)^j\Big(\frac{N-i}{N}\Big)^{n-j}
+   \end{equation}
+   #+end_src
+
+** ditaa
+  :LOGBOOK:
+  - State "DONE"       from "TODO"       [2013-09-15 Sun 15:55]
+  - State "TODO"       from ""           [2013-09-14 Sat 10:14]
+  :END:
+  #+begin_src ditaa :file ../images_autogen/20130912-demo_ditaa.png :cmdline -r -s 0.8
+       +----------+ edit +----------+   input +----------+ compile +----------+
+       |  cPNK    |      |  cRED    |         |   cGRE   |         |  cPNK    |
+       | refined  |<-----+ h,cpp    +-------->+ compiler,+-------->+Executable|
+       |   h,cpp  |      |          |         | linker   |         |   File   |
+       | {s}      |      |  {io}    |         |          |         |    {s}   |
+       +----------+      +----+-----+         +----------+         +----------+
+                              | input
+                              v
+                         +----------+
+                         |  cGRE    |
+                         | doxygen  |
+                         |          |
+                         +----+-----+
+                              | process
+                              v
+                         +----------+
+                         |  cPNK    |
+                         | Doxgen   |
+                         | Document |
+                         |    {d}   |
+                         +----------+
+
+  #+end_src
+
+  #+RESULTS:
+  [[file:images_autogen/20130912-demo_ditaa.png]]
+
+** dot
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-15 Sun 15:55]
+   - State "TODO"       from ""           [2013-09-14 Sat 21:24]
+   :END:
+   #+begin_src dot :file ../images_autogen/20130912-demo_dot.png :cmdline -Kdot -Tpng   digraph G {
+   digraph G {
+     size="8,6"
+     ratio=expand
+     edge [dir=both]
+     plcnet [shape=box, label="PLC Network"]
+     subgraph cluster_wrapline {
+       label="Wrapline Control System"
+       color=purple
+       subgraph {
+       rank=same
+       exec
+       sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+       }
+       edge[style=dotted, dir=none]
+       exec -> opserver
+       exec -> db
+       plc -> exec
+       edge [style=line, dir=both]
+       exec -> sharedmem
+       sharedmem -> db
+       plc -> sharedmem
+       sharedmem -> opserver
+     }
+     plcnet -> plc [constraint=false]
+     millwide [shape=box, label="Millwide System"]
+     db -> millwide
+
+     subgraph cluster_opclients {
+       color=blue
+       label="Operator Clients"
+       rankdir=LR
+       labelloc=b
+       node[label=client]
+       opserver -> client1
+       opserver -> client2
+       opserver -> client3
+     }
+   }
+   #+end_src
+** plantuml
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2013-09-15 Sun 15:56]
+   - State "TODO"       from ""           [2013-09-14 Sat 21:39]
+   :END:
+   #+begin_src plantuml :file ../images_autogen/20130912-demo_plantuml.png
+   title Example Sequence Diagram
+   activate Client
+   Client -> Server: Session Initiation
+   note right: Client requests new session
+   activate Server
+   Client <-- Server: Authorization Request
+   note left: Server requires authentication
+   Client -> Server: Authorization Response
+   note right: Client provides authentication details
+   Server --> Client: Session Token
+   note left: Session established
+   deactivate Server
+   Client -> Client: Saves token
+   deactivate Client
+   #+end_src
+
+** asymptote
+   #+header: :var n=8
+   #+begin_src asymptote :file ../images_autogen/20130912-demo_asy.png
+   import geometry;
+
+   size(7cm,0);
+
+   picture pic;
+   // on définit une courbe reliant les points (0,1) et (1,0)
+   path c=(0,1){dir(-5)}..{dir(-5)}(1,0);
+   // à l'aide de trois rotations, on définit
+   // le motif (dans un carré de 2 sur 2) ...
+   path motif=buildcycle(c,rotate(90)*c,
+                         rotate(180)*c,rotate(-90)*c);
+   filldraw(pic,motif,lightred+white,black);
+   // ... et une double boucle pour "paver"
+   // suivant (Ox) et suivant (Oy)
+   for(int i=0; i<n; ++i)
+     {
+       for(int j=0; j<n; ++j)
+         {
+           add(shift(2*i,2*j)*pic);
+         }
+     }
+   #+end_src
+
+** r language
+   #+begin_src R :file ../images_autogen/20130912-demo_r.png :exports results :results graphics
+   plot(matrix(rnorm(100), ncol=2), type="l")
+   #+end_src
+
+** octave
+   #+begin_src octave :exports results :results file
+   figure( 1, "visible", "off" );
+   sombrero;
+   print -r90 -dpng ../images_autogen/20130912-demo_octave.png;
+   ans = "../images_autogen/20130912-demo_octave.png";
+   #+end_src
+* Footnotes
+
+[fn:1] http://www.footnote.com
+
+[fn:2] http://www.footnote2.com, this is a long description for the footnote
