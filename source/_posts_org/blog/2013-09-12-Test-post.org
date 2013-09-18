@@ -1,5 +1,5 @@
-#+LANGUAGE: en
 #+FILETAGS: :org_mode:octopress:
+#+LANGUAGE: en
 
 #+BEGIN_HTML
 ---
@@ -8,7 +8,8 @@ title: "Test post"
 date: 2013-09-12 18:18
 comments: true
 published: true
-categories: [org_mode, octopress]
+categories: [代码]
+tags: [org_mode, octopress, 中文tag]
 ---
 #+END_HTML
 

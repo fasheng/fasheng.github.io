@@ -9,24 +9,27 @@ title: "Experimental post for org-mode under octopress"
 date: 2013-09-12 18:18
 comments: true
 published: true
-categories: [org_mode, octopress]
+categories: [代码]
+tags: [org_mode, octopress]
 styles: [math, table]
+toc: true
+tocstartlv: 2
 ---
 #+END_HTML
 
 *Excerpts:*
 Here is excerpts.
-test text test text test text test text test text test text test
-text test text test text test text
+text text text text text text text text text text text text text
+text text text text text text text
 
   # #+HTML: <!--more-->
 
 * Header
-  test text
+  text text
 
-  *test text* test text test text test text test text test text test
-  +text test text test text test text+
-  test text test text test text test /text test text test text test/
+  *text text* text text text text text text text text text text text
+  +text text text text text text text+
+  text text text text text text text /text text text text text text/
 * Table
   :LOGBOOK:
   - State "DONE"       from "TODO"       [2013-09-17 Tue 09:56]
@@ -165,7 +168,7 @@ text test text test text test text
    #+ATTR_HTML: :title demo image cowfish :width 300 :height 250
    [[file:../images_post/head_cowfish.jpg]]
 
-   test text test text test text test text test text test text test
+   text text text text text text text text text text text text text
 
 ** image surround by text
    :LOGBOOK:
@@ -178,19 +181,19 @@ text test text test text test text
 
    # #+HTML: {% img left ../images_post/head_cowfish.jpg 300 350 demo image cowfish %}
 
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   test text test text test text test text test text test text test
-   text test text test text test text test text test text test text
-   test text test text test text test test text test text test text
-   test text test text test text test test text test text test text
-   test text test text test text test test text test text test text
-   test text test text test text test
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text text text text text text text
+   text text text text text text text
 
 * Attachment
   [[file:../downloads/demo_attachment_Texlive_%E5%AE%98%E6%96%B9%E6%8C%87%E5%8D%97_zh-cn.pdf][download demo attachment]]

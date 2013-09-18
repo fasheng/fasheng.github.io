@@ -4,28 +4,31 @@ title: "Experimental post for org-mode under octopress"
 date: 2013-09-12 18:18
 comments: true
 published: true
-categories: [org_mode, octopress]
+categories: [代码]
+tags: [org_mode, octopress]
 styles: [math, table]
+toc: true
+tocstartlv: 2
 ---
 
 <p>
 <b>Excerpts:</b>
 Here is excerpts.
-test text test text test text test text test text test text test
-text test text test text test text
+text text text text text text text text text text text text text
+text text text text text text text
 </p>
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Header</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-test text
+text text
 </p>
 
 <p>
-<b>test text</b> test text test text test text test text test text test
-<del>text test text test text test text</del>
-test text test text test text test <i>text test text test text test</i>
+<b>text text</b> text text text text text text text text text text text
+<del>text text text text text text text</del>
+text text text text text text text <i>text text text text text text</i>
 </p>
 </div>
 </div>
@@ -277,7 +280,7 @@ link to <a href="http:2013-09-12-Test-post.html">aother post</a>
 </div>
 
 <p>
-test text test text test text test text test text test text test
+text text text text text text text text text text text text text
 </p>
 </div>
 </div>
@@ -291,19 +294,19 @@ test text test text test text test text test text test text test
 </div>
 
 <p>
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-test text test text test text test text test text test text test
-text test text test text test text test text test text test text
-test text test text test text test test text test text test text
-test text test text test text test test text test text test text
-test text test text test text test test text test text test text
-test text test text test text test
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
+text text text text text text text
 </p>
 </div>
 </div>
