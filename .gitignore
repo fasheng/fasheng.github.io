@@ -11,6 +11,10 @@ source/_stash
 source/stylesheets/screen.css
 vendor
 node_modules
-*/**/*~
 .preview-mode
 tmp/
+*/**/*~
+source/blogimages
+source/autogenimg
+source/downloads
+source/_post_org/blog/*.html
