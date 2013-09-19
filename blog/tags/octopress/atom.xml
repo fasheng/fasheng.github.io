@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[fasheng的博客]]></title>
-  <link href="http://fasheng.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Tags: octopress | fasheng的博客]]></title>
+  <link href="http://fasheng.github.io/blog/tags/octopress/atom.xml" rel="self"/>
   <link href="http://fasheng.github.io/"/>
   <updated>2013-09-19T15:35:00+08:00</updated>
   <id>http://fasheng.github.io/</id>
@@ -189,7 +189,7 @@ but not any simpler &#x2013; Albert Einstein
 <div class="outline-text-2" id="text-4">
 </div>
 <div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> code surround by &#8216;#+BEGIN_EXAMPLE&#8217;</h3>
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> code surround by '#+BEGIN_EXAMPLE'</h3>
 <div class="outline-text-3" id="text-4-1">
 <pre class="example">
 def show
@@ -203,7 +203,7 @@ end
 </div>
 </div>
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> code surround by &#8216;#+BEGIN_SRC&#8217;</h3>
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> code surround by '#+BEGIN_SRC'</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 
@@ -219,7 +219,7 @@ end
 </div>
 </div>
 <div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> code surround by &#8216;#+BEGIN_SRC&#8217;, enable number line and inner reference</h3>
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> code surround by '#+BEGIN_SRC', enable number line and inner reference</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 
@@ -241,30 +241,23 @@ jumps to point-min.
 <h4 id="sec-4-4-1"><span class="section-number-4">4.4.1</span> syntax by backtick</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">show</span>
-</span><span class='line'>  <span class="vi">@widget</span> <span class="o">=</span> <span class="no">Widget</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
-</span><span class='line'>    <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="c1"># show.html.erb</span>
-</span><span class='line'>    <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@widget</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+```ruby
+def show
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+```
 </p>
 </div>
 </div>
 <div id="outline-container-sec-4-4-2" class="outline-4">
-<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> syntax by &#8216;codeblock&#8217;</h4>
+<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> syntax by 'codeblock'</h4>
 <div class="outline-text-4" id="text-4-4-2">
 <p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -278,17 +271,15 @@ jumps to point-min.
 </span><span class='line'>    <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@widget</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </p>
 </div>
 </div>
 
 <div id="outline-container-sec-4-4-3" class="outline-4">
-<h4 id="sec-4-4-3"><span class="section-number-4">4.4.3</span> syntax by &#8216;highlight&#8217;</h4>
+<h4 id="sec-4-4-3"><span class="section-number-4">4.4.3</span> syntax by 'highlight'</h4>
 <div class="outline-text-4" id="text-4-4-3">
 <p>
-
 <div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">show</span>
   <span class="vi">@widget</span> <span class="o">=</span> <span class="no">Widget</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
   <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
@@ -297,7 +288,6 @@ jumps to point-min.
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
-
 </p>
 </div>
 </div>
