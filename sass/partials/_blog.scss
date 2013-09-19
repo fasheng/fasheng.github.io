@@ -81,6 +81,10 @@ article {
     }
   }
 
+  indexheader {
+    @extend header;
+    padding-top: 0em;
+  }
 }
 article + article {
   .blog-index & {

@@ -18,6 +18,8 @@ text text text text text text text text text text text text text
 text text text text text text text
 </p>
 
+<!--more-->
+
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Header</h2>
 <div class="outline-text-2" id="text-1">

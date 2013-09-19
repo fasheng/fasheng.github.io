@@ -22,7 +22,7 @@ Here is excerpts.
 text text text text text text text text text text text text text
 text text text text text text text
 
-  # #+HTML: <!--more-->
+#+HTML: <!--more-->
 
 * Header
   text text
