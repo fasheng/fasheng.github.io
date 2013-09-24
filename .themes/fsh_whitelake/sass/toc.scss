@@ -1,0 +1,30 @@
+div#tocBlock {
+    box-shadow:5px 5px 5px #999;
+    -moz-box-shadow:5px 5px 5px #999;
+    -webkit-box-shadow:5px 5px 5px #999;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    padding:10px;
+    float:right;
+    font-size:10pt;
+    width:300px;
+    padding-left:20px;
+    padding-right:10px;
+    padding-top:10px;
+    padding-bottom:0px;
+    background:rgba(214,240,248,0.5);
+    border:solid 1px #999999;
+    margin:0 0 10px 15px}
+div#tocBlock .tocHeading {
+    font-weight:bold;
+    font-size:125%}
+div#tocBlock #toc {
+    margin-left:15px !important;
+    }
+div#tocBlock #toc ul {
+    list-style:circle}
+div#tocBlock #toc ul li {
+    margin-left:5px !important;
+    padding:0 !important}
+div#tocBlock #toc ul li ul {
+    list-style:square}
