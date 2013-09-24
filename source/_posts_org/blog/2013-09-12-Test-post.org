@@ -18,3 +18,16 @@ tags: [org_mode, octopress]
 
   test text test text test text test text test text test text test
   text test text test text test text
+* 中文标题
+  *加粗文本*
+
+  /斜体文本/
+
+  _下划线文本_
+
+  +删除文本+
+
+  文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
+  文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
+  文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
+  文本文本文本文本文本文本

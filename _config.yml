@@ -10,7 +10,7 @@ author: Xu FaSheng
 simple_search: http://google.com/search
 description:
 
-timezone: Asia/Shanghai 
+timezone: Asia/Shanghai
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -65,7 +65,12 @@ tag_title_prefix: "Tags: "
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, custom/asides/category_list.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html, custom/asides/tag_cloud.html]
+default_asides:
+  - asides/recent_posts.html
+  - custom/asides/category_list.html
+  - custom/asides/tag_cloud.html
+  - asides/github.html
+  - asides/googleplus.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -117,3 +122,7 @@ google_analytics_tracking_id: UA-44052105-1
 
 # Facebook Like
 facebook_like: false
+
+;; Local Variables:
+;; mode: conf
+;; End:
