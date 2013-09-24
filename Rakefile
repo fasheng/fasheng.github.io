@@ -53,6 +53,11 @@ desc "Generate jekyll site"
 task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Generating Site with Jekyll"
+
+  puts "Reset the auto generated images"
+  system "git checkout -f #{source_dir}/#{posts_dir}/../images_autogen"
+  system "git checkout -f #{source_dir}/images_autogen"
+
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll"
 end
@@ -251,7 +256,7 @@ desc "deploy public directory to github pages"
 multitask :push do
   puts "## Deploying branch to Github Pages "
   puts "## Pulling any updates from Github Pages "
-  cd "#{deploy_dir}" do 
+  cd "#{deploy_dir}" do
     system "git pull"
   end
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
