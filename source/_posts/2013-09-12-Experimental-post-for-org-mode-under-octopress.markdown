@@ -12,7 +12,7 @@ tocstartlv: 2
 ---
 
 <p>
-<b>Excerpts:</b>
+<strong>Excerpts:</strong>
 Here is excerpts.
 text text text text text text text text text text text text text
 text text text text text text text
@@ -24,13 +24,24 @@ text text text text text text text
 <h2 id="sec-1"><span class="section-number-2">1</span> Header</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-text text
+<strong>blod text</strong>
 </p>
 
 <p>
-<b>text text</b> text text text text text text text text text text text
-<del>text text text text text text text</del>
-text text text text text text text <i>text text text text text text</i>
+<cite>italic text</cite>
+</p>
+
+<p>
+<span class="underline">underline text</span>
+</p>
+
+<p>
+<del>delete text text text text text text</del>
+</p>
+
+<p>
+text text text text text text text text text text text text text
+text text text text text text text text text text text text text
 </p>
 </div>
 </div>
@@ -292,7 +303,7 @@ text text text text text text text text text text text text text
 
 <div class="figure">
 <p><img src="../images_post/head_cowfish.jpg" title="demo image cowfish" class="left" width="300" height="250" alt="head_cowfish.jpg"/></p>
-<p><b>demo image cowfish</b></p>
+<p><strong>demo image cowfish</strong></p>
 </div>
 
 <p>

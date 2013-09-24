@@ -25,11 +25,16 @@ text text text text text text text
 #+HTML: <!--more-->
 
 * Header
-  text text
+  *blod text*
 
-  *text text* text text text text text text text text text text text
-  +text text text text text text text+
-  text text text text text text text /text text text text text text/
+  /italic text/
+
+  _underline text_
+
+  +delete text text text text text text+
+
+  text text text text text text text text text text text text text
+  text text text text text text text text text text text text text
 * Table
   :LOGBOOK:
   - State "DONE"       from "TODO"       [2013-09-17 Tue 09:56]
