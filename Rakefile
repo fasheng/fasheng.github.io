@@ -56,7 +56,6 @@ task :generate do
 
   puts "Reset the auto generated images"
   system "git checkout -f #{source_dir}/#{posts_dir}/../images_autogen"
-  system "git checkout -f #{source_dir}/images_autogen"
 
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll"

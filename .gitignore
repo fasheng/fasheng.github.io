@@ -14,7 +14,7 @@ node_modules
 .preview-mode
 tmp/
 */**/*~
-source/blogimages
-source/autogenimg
+source/images_post
+source/images_autogen
 source/downloads
-source/_post_org/blog/*.html
+source/_posts_org/blog/*.html
