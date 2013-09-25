@@ -34,7 +34,7 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 </pre>
 </div>
 <div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
+<h2 class="footnotes">&#33050;&#27880;: </h2>
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
