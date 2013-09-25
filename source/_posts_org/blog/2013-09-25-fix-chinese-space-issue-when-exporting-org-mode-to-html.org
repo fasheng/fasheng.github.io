@@ -1,0 +1,42 @@
+#+FILETAGS: :org_mode:export:html:Q_A:
+
+#+BEGIN_HTML
+---
+layout: post
+title: "org-mode 导出 html 时中文空格问题的临时解决方法"
+date: 2013-09-25 16:51
+comments: true
+categories: [代码]
+tags: [org_mode, export, html, Q_A]
+---
+#+END_HTML
+
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余
+的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关[fn:1][fn:2]，
+属于历史遗留问题，短时间内应不会解决。
+
+后通过学习 ox-html 源码，找到一种临时解决方法[fn:3]，通过给函数
+org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文
+合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+下工作正常）：
+
+#+BEGIN_SRC emacs-lisp
+(defadvice org-html-paragraph (before fsh-org-html-paragraph-advice
+                                      (paragraph contents info) activate)
+  "Join consecutive Chinese lines into a single long line without
+unwanted space when exporting org-mode to html."
+  (let ((fixed-contents)
+        (orig-contents (ad-get-arg 1))
+        (reg-han "[[:multibyte:]]"))
+    (setq fixed-contents (replace-regexp-in-string
+                          (concat "\\(" reg-han "\\) *\n *\\(" reg-han "\\)")
+                          "\\1\\2" orig-contents))
+    (ad-set-arg 1 fixed-contents)
+    ))
+#+END_SRC
+
+* Footnotes
+
+[fn:1] http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033
+[fn:2] http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/
+[fn:3] https://gist.github.com/fasheng/6696398
