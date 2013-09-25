@@ -9,7 +9,8 @@
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="Header in another post test text test text test text test text test text test text test test text test text test text test text test text test text &hellip;">
+  <meta name="description" content="最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关1, 2，属于历史遗留问题，短时间内应不会解决。 后通过学习 ox-html 源码，找到一种临时解决方法3，通过给函数
+org-html- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -138,6 +139,110 @@
 
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">org-mode 导出 html 时中文空格问题的临时解决方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T16:51:00+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html#disqus_thread">Comments</a>
+        
+        
+         | 
+
+<span class="categories">
+  
+    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
+    with tag <a class='tag' href='/blog/tags/q-a/'>Q_A</a>, <a class='tag' href='/blog/tags/export/'>export</a>, <a class='tag' href='/blog/tags/html/'>html</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>，属于历史遗留问题，短时间内应不会解决。
+</p>
+
+
+
+
+<p>
+后通过学习 ox-html 源码，找到一种临时解决方法<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>，通过给函数
+org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+下工作正常）：
+</p>
+
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(<span style="color: #00bfff;">defadvice</span> <span style="color: #daa520;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
+                                      (paragraph contents info) activate)
+  <span style="color: #ffe4b5;">"Join consecutive Chinese lines into a single long line without</span>
+<span style="color: #ffe4b5;">unwanted space when exporting org-mode to html."</span>
+  (<span style="color: #00bfff;">let</span> ((fixed-contents)
+        (orig-contents (ad-get-arg 1))
+        (reg-han <span style="color: #deb887;">"[[:multibyte:]]"</span>))
+    (setq fixed-contents (replace-regexp-in-string
+                          (concat <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;"> *\n *</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;">"</span>)
+                          <span style="color: #deb887;">"\\1\\2"</span> orig-contents))
+    (ad-set-arg 1 fixed-contents)
+    ))
+</pre>
+</div>
+
+
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<a href="http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033">http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<a href="http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/">http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<a href="https://gist.github.com/fasheng/6696398">https://gist.github.com/fasheng/6696398</a>
+</p></div>
+
+
+</div>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013-09-12-Test-post.html">Test post</a></h1>
     
     
@@ -185,6 +290,34 @@ test text test text test text test text test text test text test
 <p>
 test text test text test text test text test text test text test
 text test text test text test text
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">中文标题</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<strong>加粗文本</strong>
+</p>
+
+<p>
+<cite>斜体文本</cite>
+</p>
+
+<p>
+<span class="underline">下划线文本</span>
+</p>
+
+<p>
+<del>删除文本</del>
+</p>
+
+<p>
+文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
 </p>
 </div>
 </div>
@@ -273,6 +406,10 @@ text text text text text text text
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">org-mode 导出 html 时中文空格问题的临时解决方法</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013-09-12-Test-post.html">Test post</a>
       </li>
     
@@ -285,7 +422,18 @@ text text text text text text text
 <section>
   <h1>Categories</h1>
   <ul id="categories">
-    <li class='category'><a href='/blog/categories/dai-ma/'>代码 (2)</a></li>
+    <li class='category'><a href='/blog/categories/dai-ma/'>代码 (3)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 120%" href="/blog/tags/q-a/">Q_A</a> &nbsp; 
+<a style="font-size: 120%" href="/blog/tags/export/">export</a> &nbsp; 
+<a style="font-size: 120%" href="/blog/tags/html/">html</a> &nbsp; 
+<a style="font-size: 145%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
+<a style="font-size: 160%" href="/blog/tags/org-mode/">org_mode</a>
 
   </ul>
 </section>
@@ -320,7 +468,6 @@ text text text text text text text
 </section>
 
 
-
 <section class="googleplus">
   <h1>
     <a href="https://plus.google.com/115034466038583920094?rel=author">
@@ -331,14 +478,6 @@ text text text text text text text
 </section>
 
 
-<section>
-  <h1>Tag Cloud</h1>
-  <ul class="tag-cloud">
-    <a style="font-size: NaN%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
-<a style="font-size: NaN%" href="/blog/tags/org-mode/">org_mode</a>
-
-  </ul>
-</section>
 
   
 </aside>

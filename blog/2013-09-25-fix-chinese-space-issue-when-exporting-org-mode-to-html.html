@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Tags: octopress - fasheng的博客</title>
+  <title>org-mode 导出 html 时中文空格问题的临时解决方法 - fasheng的博客</title>
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="Tag: octopress">
+  <meta name="description" content="最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关1, 2，属于历史遗留问题，短时间内应不会解决。 后通过学习 ox-html 源码，找到一种临时解决方法3，通过给函数
+org-html- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fasheng.github.ioblog/tags/octopress/index.html">
+  <link rel="canonical" href="http://fasheng.github.io/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="fasheng的博客" type="application/atom+xml">
@@ -84,68 +85,169 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
+
   <header>
-    <h1 class="entry-title">Tags: octopress</h1>
+    
+      <h1 class="entry-title">org-mode 导出 html 时中文空格问题的临时解决方法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T16:51:00+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+        
+         | 
+
+<span class="categories">
+  
+    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
+    with tag <a class='tag' href='/blog/tags/q-a/'>Q_A</a>, <a class='tag' href='/blog/tags/export/'>export</a>, <a class='tag' href='/blog/tags/html/'>html</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
+  
+</span>
+
+
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="tag">
+
+
+<div class="entry-content"><p>
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>，属于历史遗留问题，短时间内应不会解决。
+</p>
 
 
 
-  
-  <h2>2013</h2>
 
-<article>
-  
-<h1><a href="/blog/2013-09-12-Test-post.html">Test post</a></h1>
-<time datetime="2013-09-12T18:18:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>12</span> <span class='year'>2013</span></time>
-
-<footer>
-    
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/octopress/'>octopress</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
-
-
-</footer>
-
-
-</article>
+<p>
+后通过学习 ox-html 源码，找到一种临时解决方法<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>，通过给函数
+org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+下工作正常）：
+</p>
 
 
 
-<article>
-  
-<h1><a href="/blog/2013-09-12-Experimental-post-for-org-mode-under-octopress.html">Experimental post for org-mode under octopress</a></h1>
-<time datetime="2013-09-12T18:18:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>12</span> <span class='year'>2013</span></time>
 
-<footer>
-    
+<div class="org-src-container">
 
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/octopress/'>octopress</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
+<pre class="src src-emacs-lisp">(<span style="color: #00bfff;">defadvice</span> <span style="color: #daa520;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
+                                      (paragraph contents info) activate)
+  <span style="color: #ffe4b5;">"Join consecutive Chinese lines into a single long line without</span>
+<span style="color: #ffe4b5;">unwanted space when exporting org-mode to html."</span>
+  (<span style="color: #00bfff;">let</span> ((fixed-contents)
+        (orig-contents (ad-get-arg 1))
+        (reg-han <span style="color: #deb887;">"[[:multibyte:]]"</span>))
+    (setq fixed-contents (replace-regexp-in-string
+                          (concat <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;"> *\n *</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;">"</span>)
+                          <span style="color: #deb887;">"\\1\\2"</span> orig-contents))
+    (ad-set-arg 1 fixed-contents)
+    ))
+</pre>
+</div>
 
 
-</footer>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<a href="http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033">http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<a href="http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/">http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<a href="https://gist.github.com/fasheng/6696398">https://gist.github.com/fasheng/6696398</a>
+</p></div>
 
 
-</article>
+</div>
+</div>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Xu FaSheng</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T16:51:00+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time>
+    </p>
+    
+      <div class="sharing">
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+    <a class="jiathis_button_googleplus"></a>
+    <a class="jiathis_button_douban"></a>
+    <a class="jiathis_button_tsina"></a>
+    <a class="jiathis_button_renren"></a>
+    <a class="jiathis_button_tsohu"></a>
+    <a class="jiathis_button_tieba"></a>
+    <a href="http://www.jiathis.com/share?uid=1814751" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+data_track_clickback:true,
+                     summary:"",
+                     shortUrl:true,
+                     hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1814751" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+   
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013-09-12-Test-post.html" title="Previous Post: Test post">&laquo; Test post</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -251,7 +353,10 @@
       var disqus_shortname = 'fashengblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fasheng.github.io/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html';
+        var disqus_url = 'http://fasheng.github.io/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

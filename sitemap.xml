@@ -8,11 +8,17 @@
     </url>
     <url>
         <loc>http://fasheng.github.io/blog/2013-09-12-Test-post.html</loc>
-        <lastmod>2013-09-24T15:30:58+08:00</lastmod>
+        <lastmod>2013-09-25T17:52:20+08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://fasheng.github.io/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html
+        </loc>
+        <lastmod>2013-09-25T18:14:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://fasheng.github.io/</loc>
-        <lastmod>2013-09-24T15:30:58+08:00</lastmod>
+        <lastmod>2013-09-25T18:14:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://fasheng.github.io/404.html</loc>
@@ -20,11 +26,11 @@
     </url>
     <url>
         <loc>http://fasheng.github.io/blog/archives/</loc>
-        <lastmod>2013-09-24T15:30:58+08:00</lastmod>
+        <lastmod>2013-09-25T18:14:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://fasheng.github.io/blog/</loc>
-        <lastmod>2013-09-24T15:30:58+08:00</lastmod>
+        <lastmod>2013-09-25T18:14:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://fasheng.github.io/robots.txt</loc>
