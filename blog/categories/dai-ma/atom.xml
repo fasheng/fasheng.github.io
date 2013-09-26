@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 代码 | fasheng的博客]]></title>
   <link href="http://fasheng.github.io/blog/categories/dai-ma/atom.xml" rel="self"/>
   <link href="http://fasheng.github.io/"/>
-  <updated>2013-09-26T15:52:17+08:00</updated>
+  <updated>2013-09-26T17:03:24+08:00</updated>
   <id>http://fasheng.github.io/</id>
   <author>
     <name><![CDATA[Xu FaSheng]]></name>
@@ -20,7 +20,7 @@
     <id>http://fasheng.github.io/blog/share-a-simple-latex-resume-template-for-org-mode</id>
     <content type="html"><![CDATA[<p>
 使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>编写了一个简单的模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
+org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>编写了一个简单的简历模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
 </p>
 
 
@@ -179,10 +179,7 @@ text test text test text test text
 </p>
 
 <p>
-文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
-文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
-文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
- 文本文本文本文本文本文本
+文本文本文本文本文本文本文，本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本。文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本。
 </p>
 </div>
 </div>
