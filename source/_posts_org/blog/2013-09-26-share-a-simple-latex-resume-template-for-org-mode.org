@@ -1,0 +1,45 @@
+#+FILETAGS: :org_mode:latex:
+
+#+BEGIN_HTML
+---
+layout: post
+title: "分享一款适用于 org-mode 的简洁风 LaTeX 简历模板"
+date: 2013-09-26 13:17
+comments: true
+categories: [代码]
+tags: [org_mode, latex]
+---
+#+END_HTML
+
+使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
+org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考
+了一些网上资料[fn:1][fn:2]编写了一个简单的简历模板，源码可以到[[https://github.com/fasheng/fsh_orgmode_latex_cv][这里]]找到，下
+面是使用示例及对应 pdf 文件。
+
+#+BEGIN_SRC org
+,#+LaTeX_HEADER: \usepackage{fsh_orgmode_cv}
+,#+LaTeX_HEADER: \usepackage{xltxtra,fontspec,xunicode,xeCJK}
+,#+LaTeX_HEADER: \setCJKmainfont{AR PL New Kai}
+
+,#+TITLE: 个人简历
+
+,* 示例 一级标题
+,** 二级标题
+   ,*二级正文*
+
+   正文正文正文正文正文正文正文正文正文
+
+,** 二级标题
+   ,*二级正文*
+
+   正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
+   正文正文正文正文正文正文正文正文正文
+#+END_SRC
+
+[[file:../downloads/20130926_demo_resume_cn.pdf][示例 pdf 下载]]
+
+* Footnotes
+
+[fn:1] https://github.com/punchagan/resume
+
+[fn:2] http://www.latextemplates.com/template/plasmati-graduate-cv
