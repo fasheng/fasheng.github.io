@@ -37,6 +37,12 @@ p.verse { margin-left: 3%; }
 /*     margin: 1.2em; */
 /* } */
 pre.src {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    /* padding: 8pt; */
+    font-family: monospace;
+    overflow: auto;
+    /* margin: 1.2em; */
     position: relative;
     overflow: visible;
     padding-top: 1.2em;
@@ -44,11 +50,13 @@ pre.src {
 pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #fff;
     top: -10px;
     right: 10px;
     padding: 3px;
-    border: 1px solid black;
+    border: 1px solid #ccc;
+    @include border-radius(.3em);
 }
 pre.src:hover:before { display: inline;}
 pre.src-sh:before    { content: 'sh'; }
@@ -69,9 +77,20 @@ pre.src-ruby:before   { content: 'Ruby'; }
 /* td.left   { text-align: left;   } */
 /* td.center { text-align: center; } */
 /* dt { font-weight: bold; } */
-.footpara:nth-child(2) { display: inline; }
-.footpara { display: block; }
-.footdef  { margin-bottom: 1em; }
+
+.footdef  {
+    margin-bottom: 1em;
+}
+.footdef>p {
+    display: inline;
+}
+/* .footpara { */
+/*     display: inline; */
+/* } */
+
+/* .footpara { display: block; } */
+/* .footpara:nth-child(2) { display: inline; } */
+
 /* .figure { padding: 1em; } */
 .figure p { text-align: center; }
 .inlinetask {
@@ -88,7 +107,8 @@ pre.src-ruby:before   { content: 'Ruby'; }
 textarea { overflow-x: auto; }
 .linenr { font-size: smaller }
 /* .code-highlighted { background-color: #ffff00; } */
-.code-highlighted { background-color: #36648B; }
+/* .code-highlighted { background-color: #36648B; } */
+.code-highlighted { background-color: #ddd; }
 .org-info-js_info-navigation { border-style: none; }
 #org-info-js_console-label {
     font-size: 10px;
@@ -101,6 +121,6 @@ textarea { overflow-x: auto; }
     font-weight: bold;
 }
 
-.footref {
-    vertical-align: super;
-}
+/* .footref { */
+/*     vertical-align: super; */
+/* } */
