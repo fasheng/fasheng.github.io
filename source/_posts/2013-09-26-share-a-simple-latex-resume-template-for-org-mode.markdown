@@ -9,7 +9,7 @@ tags: [org_mode, latex]
 
 <p>
 使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>编写了一个简单的模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
+org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>编写了一个简单的简历模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
 </p>
 
 <div class="org-src-container">
