@@ -4,9 +4,9 @@
 
 url: http://fasheng.github.io
 #url: '' # used for preview
-title: fasheng的博客
-subtitle: 自在  平和  长久  共一
-author: Xu FaSheng
+title: "fasheng的博客"
+subtitle: "自在  平和  长久  共一"
+author: "Xu FaSheng"
 simple_search: http://google.com/search
 description:
 
@@ -122,7 +122,3 @@ google_analytics_tracking_id: UA-44052105-1
 
 # Facebook Like
 facebook_like: false
-
-;; Local Variables:
-;; mode: conf
-;; End:

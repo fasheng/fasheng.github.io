@@ -16,7 +16,7 @@ tags: [org_mode, export, html, Q_A]
 属于历史遗留问题，短时间内应不会解决。
 
 后通过学习 ox-html 源码，找到一种临时解决方法[fn:3]，通过给函数
-org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文
+=org-html-paragraph= 添加 defadvice，使得导出 html 前自动将段落中的多行中文
 合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
 下工作正常）：
 

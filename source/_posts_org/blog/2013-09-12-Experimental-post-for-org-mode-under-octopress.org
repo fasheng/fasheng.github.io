@@ -29,6 +29,8 @@ text text text text text text text
 
   /italic text/
 
+  =code text=
+
   _underline text_
 
   +delete text text text text text text+

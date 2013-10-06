@@ -32,6 +32,10 @@ text text text text text text text
 </p>
 
 <p>
+<code>code text</code>
+</p>
+
+<p>
 <span class="underline">underline text</span>
 </p>
 
@@ -176,13 +180,13 @@ end
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 
-<pre class="src src-ruby"><span style="color: #00bfff;">def</span> <span style="color: #daa520;">show</span>
-  <span style="color: #4eee94;">@widget</span> = <span style="color: #98f5ff;">Widget</span>(params[<span style="color: #a2cd5a;">:id</span>])
-  respond_to <span style="color: #00bfff;">do</span> |format|
-    format.html <span style="color: #7f7f7f;"># </span><span style="color: #7f7f7f;">show.html.erb</span>
-    format.json { render <span style="color: #a2cd5a;">json</span>: <span style="color: #4eee94;">@widget</span> }
-  <span style="color: #00bfff;">end</span>
-<span style="color: #00bfff;">end</span>
+<pre class="src src-ruby"><span style="color: #a020f0; font-weight: bold;">def</span> <span style="color: #990000;">show</span>
+  <span style="color: #0086b3;">@widget</span> = <span style="color: #445588;">Widget</span>(params[<span style="color: #990073;">:id</span>])
+  respond_to <span style="color: #a020f0; font-weight: bold;">do</span> |format|
+    format.html <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">show.html.erb</span>
+    format.json { render <span style="color: #990073;">json</span>: <span style="color: #0086b3;">@widget</span> }
+  <span style="color: #a020f0; font-weight: bold;">end</span>
+<span style="color: #a020f0; font-weight: bold;">end</span>
 </pre>
 </div>
 </div>
@@ -192,7 +196,7 @@ end
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1: </span>(<span style="color: #00bfff;">save-excursion</span></span>
+<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1: </span>(<span style="color: #a020f0; font-weight: bold;">save-excursion</span></span>
 <span id="coderef-jump" class="coderef-off"><span class="linenr">2: </span>   (goto-char (point-min))</span>
 </pre>
 </div>
@@ -261,11 +265,11 @@ end
 <h2 id="sec-5"><span class="section-number-2">5</span> Footnote and reference</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-thie is a reference<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>
+thie is a reference<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup>
 </p>
 
 <p>
-this is another reference<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>
+this is another reference<sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>
 </p>
 </div>
 </div>
@@ -429,11 +433,11 @@ image background will be effect by your emacs environtment
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
 <a href="http://www.footnote.com">http://www.footnote.com</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
 <a href="http://www.footnote2.com">http://www.footnote2.com</a>, this is a long description for the footnote
 </p></div>
 
