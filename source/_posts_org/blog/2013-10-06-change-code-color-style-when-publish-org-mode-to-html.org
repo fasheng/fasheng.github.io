@@ -1,0 +1,38 @@
+#+FILETAGS: :org_mode:export:html:Q_A:
+
+#+BEGIN_HTML
+---
+layout: post
+title: "设置 org-mode 导出为 html 时的代码高亮风格"
+date: 2013-10-06 18:06
+comments: true
+categories: [代码]
+tags: [org_mode, export, html, Q_A]
+---
+#+END_HTML
+
+结合 org-mode 与 octopress 来写博客还是挺方便的，只是遇到一个代码高亮的
+问题，原因是 org-mode 导出为 html 时通过 *htmlize* 来格式化代码，而代码
+风格依赖于 emacs 的外观主题，个人 emacs 常用的是暗系风格主题，但博客主
+题风格与之相反，这样导出的代码区块部署到博客页面会不太协调。解决办法也
+挺简单，为 =org-publish= 添加 defadvice，在发布博客前设置一个与页面协调
+的主题即可，个人觉得主题 github[fn:1] 挺不错，代码如下：
+
+#+BEGIN_SRC elisp
+(defadvice org-publish (around fsh-org-publish-advice
+                                        (project &optional force async) activate)
+  "Change theme before publishing, for getting a good html code highlight style through
+htmlize."
+  (let ((thems custom-enabled-themes))
+      (dolist (theme thems)
+        (disable-theme theme))
+      (load-theme 'github)
+      ad-do-it
+      (disable-theme 'github)
+      (dolist (theme thems)
+        (enable-theme theme))
+      ))
+#+END_SRC
+* Footnotes
+
+[fn:1] https://github.com/dudleyf/color-theme-github

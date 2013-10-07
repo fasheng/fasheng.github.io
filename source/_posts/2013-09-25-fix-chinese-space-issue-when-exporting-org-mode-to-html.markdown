@@ -8,7 +8,7 @@ tags: [org_mode, export, html, Q_A]
 ---
 
 <p>
-最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>, </sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>，属于历史遗留问题，短时间内应不会解决。
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>，属于历史遗留问题，短时间内应不会解决。
 </p>
 
 <p>
