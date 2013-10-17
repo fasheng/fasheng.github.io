@@ -4,7 +4,7 @@
   <title><![CDATA[Tags: Q_A | fasheng的博客]]></title>
   <link href="http://fasheng.github.io/blog/tags/q-a/atom.xml" rel="self"/>
   <link href="http://fasheng.github.io/"/>
-  <updated>2013-09-26T17:03:24+08:00</updated>
+  <updated>2013-10-17T15:44:45+08:00</updated>
   <id>http://fasheng.github.io/</id>
   <author>
     <name><![CDATA[Xu FaSheng]]></name>
@@ -14,20 +14,66 @@
 
   
   <entry>
+    <title type="html"><![CDATA[设置 org-mode 导出为 html 时的代码高亮风格]]></title>
+    <link href="http://fasheng.github.io/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html"/>
+    <updated>2013-10-06T18:06:00+08:00</updated>
+    <id>http://fasheng.github.io/blog/change-code-color-style-when-publish-org-mode-to-html</id>
+    <content type="html"><![CDATA[<p>
+结合 org-mode 与 octopress 来写博客还是挺方便的，只是遇到一个代码高亮的问题，原因是 org-mode 导出为 html 时通过 <strong>htmlize</strong> 来格式化代码，而代码风格依赖于 emacs 的外观主题，个人 emacs 常用的是暗系风格主题，但博客主题风格与之相反，这样导出的代码区块部署到博客页面会不太协调。解决办法也挺简单，为 <code>org-publish</code> 添加 defadvice，在发布博客前设置一个与页面协调的主题即可，个人觉得主题 github<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup> 挺不错，代码如下：
+</p>
+
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="color: #a020f0; font-weight: bold;">defadvice</span> <span style="color: #990000;">org-publish</span> (around fsh-org-publish-advice
+                                        (project <span style="color: #445588;">&amp;optional</span> force async) activate)
+  <span style="color: #dd1144;">"Change theme before publishing, for getting a good html code highlight style through</span>
+<span style="color: #dd1144;">htmlize."</span>
+  (<span style="color: #a020f0; font-weight: bold;">let</span> ((thems custom-enabled-themes))
+      (<span style="color: #a020f0; font-weight: bold;">dolist</span> (theme thems)
+        (disable-theme theme))
+      (load-theme 'github)
+      ad-do-it
+      (disable-theme 'github)
+      (<span style="color: #a020f0; font-weight: bold;">dolist</span> (theme thems)
+        (enable-theme theme))
+      ))
+</pre>
+</div>
+
+
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
+<a href="https://github.com/dudleyf/color-theme-github">https://github.com/dudleyf/color-theme-github</a>
+</p></div>
+
+
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[org-mode 导出 html 时中文空格问题的临时解决方法]]></title>
     <link href="http://fasheng.github.io/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html"/>
     <updated>2013-09-25T16:51:00+08:00</updated>
     <id>http://fasheng.github.io/blog/fix-chinese-space-issue-when-exporting-org-mode-to-html</id>
     <content type="html"><![CDATA[<p>
-最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>，属于历史遗留问题，短时间内应不会解决。
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>，属于历史遗留问题，短时间内应不会解决。
 </p>
 
 
 
 
 <p>
-后通过学习 ox-html 源码，找到一种临时解决方法<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>，通过给函数
-org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+后通过学习 ox-html 源码，找到一种临时解决方法<sup>[<a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a>]</sup>，通过给函数
+<code>org-html-paragraph</code> 添加 defadvice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
 下工作正常）：
 </p>
 
@@ -36,16 +82,16 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(<span style="color: #00bfff;">defadvice</span> <span style="color: #daa520;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
+<pre class="src src-emacs-lisp">(<span style="color: #a020f0; font-weight: bold;">defadvice</span> <span style="color: #990000;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
                                       (paragraph contents info) activate)
-  <span style="color: #ffe4b5;">"Join consecutive Chinese lines into a single long line without</span>
-<span style="color: #ffe4b5;">unwanted space when exporting org-mode to html."</span>
-  (<span style="color: #00bfff;">let</span> ((fixed-contents)
+  <span style="color: #dd1144;">"Join consecutive Chinese lines into a single long line without</span>
+<span style="color: #dd1144;">unwanted space when exporting org-mode to html."</span>
+  (<span style="color: #a020f0; font-weight: bold;">let</span> ((fixed-contents)
         (orig-contents (ad-get-arg 1))
-        (reg-han <span style="color: #deb887;">"[[:multibyte:]]"</span>))
+        (reg-han <span style="color: #dd1144;">"[[:multibyte:]]"</span>))
     (setq fixed-contents (replace-regexp-in-string
-                          (concat <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;"> *\n *</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;">"</span>)
-                          <span style="color: #deb887;">"\\1\\2"</span> orig-contents))
+                          (concat <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;"> *\n *</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;">"</span>)
+                          <span style="color: #dd1144;">"\\1\\2"</span> orig-contents))
     (ad-set-arg 1 fixed-contents)
     ))
 </pre>
@@ -56,15 +102,15 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 <h2 class="footnotes">&#33050;&#27880;: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
 <a href="http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033">http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
 <a href="http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/">http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a>]</sup> <p class="footpara">
 <a href="https://gist.github.com/fasheng/6696398">https://gist.github.com/fasheng/6696398</a>
 </p></div>
 

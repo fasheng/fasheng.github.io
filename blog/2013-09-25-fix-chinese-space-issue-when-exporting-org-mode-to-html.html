@@ -9,7 +9,7 @@
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关1, 2，属于历史遗留问题，短时间内应不会解决。 后通过学习 ox-html 源码，找到一种临时解决方法3，通过给函数
+  <meta name="description" content="最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关[1][2]，属于历史遗留问题，短时间内应不会解决。 后通过学习 ox-html 源码，找到一种临时解决方法[3]，通过给函数
 org-html- &hellip;">
   
 
@@ -128,15 +128,15 @@ org-html- &hellip;">
 
 
 <div class="entry-content"><p>
-最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>，属于历史遗留问题，短时间内应不会解决。
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>，属于历史遗留问题，短时间内应不会解决。
 </p>
 
 
 
 
 <p>
-后通过学习 ox-html 源码，找到一种临时解决方法<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>，通过给函数
-org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+后通过学习 ox-html 源码，找到一种临时解决方法<sup>[<a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a>]</sup>，通过给函数
+<code>org-html-paragraph</code> 添加 defadvice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
 下工作正常）：
 </p>
 
@@ -145,16 +145,16 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(<span style="color: #00bfff;">defadvice</span> <span style="color: #daa520;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
+<pre class="src src-emacs-lisp">(<span style="color: #a020f0; font-weight: bold;">defadvice</span> <span style="color: #990000;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
                                       (paragraph contents info) activate)
-  <span style="color: #ffe4b5;">"Join consecutive Chinese lines into a single long line without</span>
-<span style="color: #ffe4b5;">unwanted space when exporting org-mode to html."</span>
-  (<span style="color: #00bfff;">let</span> ((fixed-contents)
+  <span style="color: #dd1144;">"Join consecutive Chinese lines into a single long line without</span>
+<span style="color: #dd1144;">unwanted space when exporting org-mode to html."</span>
+  (<span style="color: #a020f0; font-weight: bold;">let</span> ((fixed-contents)
         (orig-contents (ad-get-arg 1))
-        (reg-han <span style="color: #deb887;">"[[:multibyte:]]"</span>))
+        (reg-han <span style="color: #dd1144;">"[[:multibyte:]]"</span>))
     (setq fixed-contents (replace-regexp-in-string
-                          (concat <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;"> *\n *</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;">"</span>)
-                          <span style="color: #deb887;">"\\1\\2"</span> orig-contents))
+                          (concat <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;"> *\n *</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;">"</span>)
+                          <span style="color: #dd1144;">"\\1\\2"</span> orig-contents))
     (ad-set-arg 1 fixed-contents)
     ))
 </pre>
@@ -165,15 +165,15 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 <h2 class="footnotes">&#33050;&#27880;: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
 <a href="http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033">http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
 <a href="http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/">http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a>]</sup> <p class="footpara">
 <a href="https://gist.github.com/fasheng/6696398">https://gist.github.com/fasheng/6696398</a>
 </p></div>
 
@@ -236,7 +236,7 @@ data_track_clickback:true,
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013-09-12-Test-post.html" title="Previous Post: Test post">&laquo; Test post</a>
+        <a class="basic-alignment left" href="/blog/2013-09-12-Experimental-post-for-org-mode-under-octopress.html" title="Previous Post: Experimental post for org-mode under octopress">&laquo; Experimental post for org-mode under octopress</a>
       
       
         <a class="basic-alignment right" href="/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html" title="Next Post: 分享一款适用于 org-mode 的简洁风 LaTeX 简历模板">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板 &raquo;</a>
@@ -260,15 +260,15 @@ data_track_clickback:true,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html">设置 org-mode 导出为 html 时的代码高亮风格</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板</a>
       </li>
     
       <li class="post">
         <a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">org-mode 导出 html 时中文空格问题的临时解决方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013-09-12-Test-post.html">Test post</a>
       </li>
     
       <li class="post">
@@ -287,11 +287,11 @@ data_track_clickback:true,
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <a style="font-size: 120%" href="/blog/tags/q-a/">Q_A</a> &nbsp; 
-<a style="font-size: 120%" href="/blog/tags/export/">export</a> &nbsp; 
-<a style="font-size: 120%" href="/blog/tags/html/">html</a> &nbsp; 
+    <a style="font-size: 140%" href="/blog/tags/q-a/">Q_A</a> &nbsp; 
+<a style="font-size: 140%" href="/blog/tags/export/">export</a> &nbsp; 
+<a style="font-size: 140%" href="/blog/tags/html/">html</a> &nbsp; 
 <a style="font-size: 120%" href="/blog/tags/latex/">latex</a> &nbsp; 
-<a style="font-size: 140%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
+<a style="font-size: 120%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
 <a style="font-size: 160%" href="/blog/tags/org-mode/">org_mode</a>
 
   </ul>

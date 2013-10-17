@@ -9,8 +9,7 @@
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料1, 2编写了一个简单的简历模板，源码可以到这里找到，下面是使用示例及对应 pdf 文件。 #+ &hellip;">
+  <meta name="description" content="结合 org-mode 与 octopress 来写博客还是挺方便的，只是遇到一个代码高亮的问题，原因是 org-mode 导出为 html 时通过 htmlize 来格式化代码，而代码风格依赖于 emacs 的外观主题，个人 emacs 常用的是暗系风格主题，但博客主题风格与之相反， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -139,6 +138,94 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html">设置 org-mode 导出为 html 时的代码高亮风格</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-06T18:06:00+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html#disqus_thread">Comments</a>
+        
+        
+         | 
+
+<span class="categories">
+  
+    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
+    with tag <a class='tag' href='/blog/tags/q-a/'>Q_A</a>, <a class='tag' href='/blog/tags/export/'>export</a>, <a class='tag' href='/blog/tags/html/'>html</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
+  
+</span>
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+结合 org-mode 与 octopress 来写博客还是挺方便的，只是遇到一个代码高亮的问题，原因是 org-mode 导出为 html 时通过 <strong>htmlize</strong> 来格式化代码，而代码风格依赖于 emacs 的外观主题，个人 emacs 常用的是暗系风格主题，但博客主题风格与之相反，这样导出的代码区块部署到博客页面会不太协调。解决办法也挺简单，为 <code>org-publish</code> 添加 defadvice，在发布博客前设置一个与页面协调的主题即可，个人觉得主题 github<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup> 挺不错，代码如下：
+</p>
+
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">(<span style="color: #a020f0; font-weight: bold;">defadvice</span> <span style="color: #990000;">org-publish</span> (around fsh-org-publish-advice
+                                        (project <span style="color: #445588;">&amp;optional</span> force async) activate)
+  <span style="color: #dd1144;">"Change theme before publishing, for getting a good html code highlight style through</span>
+<span style="color: #dd1144;">htmlize."</span>
+  (<span style="color: #a020f0; font-weight: bold;">let</span> ((thems custom-enabled-themes))
+      (<span style="color: #a020f0; font-weight: bold;">dolist</span> (theme thems)
+        (disable-theme theme))
+      (load-theme 'github)
+      ad-do-it
+      (disable-theme 'github)
+      (<span style="color: #a020f0; font-weight: bold;">dolist</span> (theme thems)
+        (enable-theme theme))
+      ))
+</pre>
+</div>
+
+
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
+<a href="https://github.com/dudleyf/color-theme-github">https://github.com/dudleyf/color-theme-github</a>
+</p></div>
+
+
+</div>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板</a></h1>
     
     
@@ -178,7 +265,7 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
   <div class="entry-content"><p>
 使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>编写了一个简单的简历模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
+org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>, </sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>编写了一个简单的简历模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
 </p>
 
 
@@ -186,19 +273,19 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 <div class="org-src-container">
 
-<pre class="src src-org"><span style="color: #7f7f7f;">#+LaTeX_HEADER: \usepackage{fsh_orgmode_cv}</span>
-<span style="color: #7f7f7f;">#+LaTeX_HEADER: \usepackage{xltxtra,fontspec,xunicode,xeCJK}</span>
-<span style="color: #7f7f7f;">#+LaTeX_HEADER: \setCJKmainfont{AR PL New Kai}</span>
+<pre class="src src-org"><span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \usepackage{fsh_orgmode_cv}</span>
+<span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \usepackage{xltxtra,fontspec,xunicode,xeCJK}</span>
+<span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \setCJKmainfont{AR PL New Kai}</span>
 
-<span style="color: #b3b3b3;">#+TITLE:</span> <span style="color: #afeeee; font-weight: bold;">&#20010;&#20154;&#31616;&#21382;</span>
+<span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">&#20010;&#20154;&#31616;&#21382;</span>
 
-<span style="color: #daa520;">* &#31034;&#20363; &#19968;&#32423;&#26631;&#39064;</span>
-<span style="color: #4eee94;">** &#20108;&#32423;&#26631;&#39064;</span>
+<span style="color: #990000;">* &#31034;&#20363; &#19968;&#32423;&#26631;&#39064;</span>
+<span style="color: #0086b3;">** &#20108;&#32423;&#26631;&#39064;</span>
    *&#20108;&#32423;&#27491;&#25991;*
 
    &#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;
 
-<span style="color: #4eee94;">** &#20108;&#32423;&#26631;&#39064;</span>
+<span style="color: #0086b3;">** &#20108;&#32423;&#26631;&#39064;</span>
    *&#20108;&#32423;&#27491;&#25991;*
 
    &#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;
@@ -218,11 +305,11 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 <h2 class="footnotes">&#33050;&#27880;: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
 <a href="https://github.com/punchagan/resume">https://github.com/punchagan/resume</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
 <a href="http://www.latextemplates.com/template/plasmati-graduate-cv">http://www.latextemplates.com/template/plasmati-graduate-cv</a>
 </p></div>
 
@@ -281,15 +368,15 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 
   <div class="entry-content"><p>
-最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>，属于历史遗留问题，短时间内应不会解决。
+最近开始使用 org-mode 写博客，发现导出为 html 后中文之间掺杂着不少多余的空格，对阅读有一定影响，搜索后发现该问题与 w3c 标准有关<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>，属于历史遗留问题，短时间内应不会解决。
 </p>
 
 
 
 
 <p>
-后通过学习 ox-html 源码，找到一种临时解决方法<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>，通过给函数
-org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
+后通过学习 ox-html 源码，找到一种临时解决方法<sup>[<a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a>]</sup>，通过给函数
+<code>org-html-paragraph</code> 添加 defadvice，使得导出 html 前自动将段落中的多行中文合并为一行，且不会影响源文件，个人认为还算实用，可供参考（org-mode 8.x
 下工作正常）：
 </p>
 
@@ -298,16 +385,16 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(<span style="color: #00bfff;">defadvice</span> <span style="color: #daa520;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
+<pre class="src src-emacs-lisp">(<span style="color: #a020f0; font-weight: bold;">defadvice</span> <span style="color: #990000;">org-html-paragraph</span> (before fsh-org-html-paragraph-advice
                                       (paragraph contents info) activate)
-  <span style="color: #ffe4b5;">"Join consecutive Chinese lines into a single long line without</span>
-<span style="color: #ffe4b5;">unwanted space when exporting org-mode to html."</span>
-  (<span style="color: #00bfff;">let</span> ((fixed-contents)
+  <span style="color: #dd1144;">"Join consecutive Chinese lines into a single long line without</span>
+<span style="color: #dd1144;">unwanted space when exporting org-mode to html."</span>
+  (<span style="color: #a020f0; font-weight: bold;">let</span> ((fixed-contents)
         (orig-contents (ad-get-arg 1))
-        (reg-han <span style="color: #deb887;">"[[:multibyte:]]"</span>))
+        (reg-han <span style="color: #dd1144;">"[[:multibyte:]]"</span>))
     (setq fixed-contents (replace-regexp-in-string
-                          (concat <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;"> *\n *</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">(</span><span style="color: #deb887;">"</span> reg-han <span style="color: #deb887;">"</span><span style="color: #deb887; font-weight: bold;">\\</span><span style="color: #deb887; font-weight: bold;">)</span><span style="color: #deb887;">"</span>)
-                          <span style="color: #deb887;">"\\1\\2"</span> orig-contents))
+                          (concat <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;"> *\n *</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">(</span><span style="color: #dd1144;">"</span> reg-han <span style="color: #dd1144;">"</span><span style="color: #009926; font-weight: bold;">\\</span><span style="color: #009926; font-weight: bold;">)</span><span style="color: #dd1144;">"</span>)
+                          <span style="color: #dd1144;">"\\1\\2"</span> orig-contents))
     (ad-set-arg 1 fixed-contents)
     ))
 </pre>
@@ -318,111 +405,19 @@ org-html-paragraph 添加 advice，使得导出 html 前自动将段落中的多
 <h2 class="footnotes">&#33050;&#27880;: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
 <a href="http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033">http://stackoverflow.com/questions/8550112/prevent-browser-converting-n-between-lines-into-space-for-chinese-characters/8551033#8551033</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
 <a href="http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/">http://chenyufei.info/blog/2011-12-23/fix-chinese-newline-becomes-space-in-browser-problem/</a>
 </p></div>
 
-<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<div class="footdef"><sup>[<a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a>]</sup> <p class="footpara">
 <a href="https://gist.github.com/fasheng/6696398">https://gist.github.com/fasheng/6696398</a>
 </p></div>
 
 
-</div>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013-09-12-Test-post.html">Test post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-12T18:18:00+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013-09-12-Test-post.html#disqus_thread">Comments</a>
-        
-        
-         | 
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/octopress/'>octopress</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
-
-
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Header in another post</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-test text test text test text test text test text test text test
-</p>
-
-<p>
-test text test text test text test text test text test text test
-text test text test text test text
-</p>
-</div>
-</div>
-
-
-
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">中文标题</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<strong>加粗文本</strong>
-</p>
-
-<p>
-<cite>斜体文本</cite>
-</p>
-
-<p>
-<span class="underline">下划线文本</span>
-</p>
-
-<p>
-<del>删除文本</del>
-</p>
-
-<p>
-文本文本文本文本文本文本文，本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本。文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本。
-</p>
 </div>
 </div>
 
@@ -510,15 +505,15 @@ text text text text text text text
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html">设置 org-mode 导出为 html 时的代码高亮风格</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板</a>
       </li>
     
       <li class="post">
         <a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">org-mode 导出 html 时中文空格问题的临时解决方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013-09-12-Test-post.html">Test post</a>
       </li>
     
       <li class="post">
@@ -537,11 +532,11 @@ text text text text text text text
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <a style="font-size: 120%" href="/blog/tags/q-a/">Q_A</a> &nbsp; 
-<a style="font-size: 120%" href="/blog/tags/export/">export</a> &nbsp; 
-<a style="font-size: 120%" href="/blog/tags/html/">html</a> &nbsp; 
+    <a style="font-size: 140%" href="/blog/tags/q-a/">Q_A</a> &nbsp; 
+<a style="font-size: 140%" href="/blog/tags/export/">export</a> &nbsp; 
+<a style="font-size: 140%" href="/blog/tags/html/">html</a> &nbsp; 
 <a style="font-size: 120%" href="/blog/tags/latex/">latex</a> &nbsp; 
-<a style="font-size: 140%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
+<a style="font-size: 120%" href="/blog/tags/octopress/">octopress</a> &nbsp; 
 <a style="font-size: 160%" href="/blog/tags/org-mode/">org_mode</a>
 
   </ul>
