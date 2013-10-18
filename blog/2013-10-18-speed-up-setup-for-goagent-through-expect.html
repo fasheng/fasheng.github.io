@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Tags: org_mode - fasheng的博客</title>
+  <title>利用 expect 简化 goagent 配置过程 - fasheng的博客</title>
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="Tag: org_mode">
+  <meta name="description" content="代码如下[1]， #! /usr/bin/expect -f set timeout 60 if {$argc != 2} { set scriptname [lindex [split $argv0 "/"] end] send_user "Usage: $scriptname \" &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fasheng.github.ioblog/tags/org-mode/index.html">
+  <link rel="canonical" href="http://fasheng.github.io/blog/2013-10-18-speed-up-setup-for-goagent-through-expect.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="fasheng的博客" type="application/atom+xml">
@@ -84,114 +84,194 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
+
   <header>
-    <h1 class="entry-title">Tags: org_mode</h1>
+    
+      <h1 class="entry-title">利用 expect 简化 goagent 配置过程</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-18T19:44:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+        
+         | 
+
+<span class="categories">
+  
+    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
+    with tag <a class='tag' href='/blog/tags/expect/'>expect</a>, <a class='tag' href='/blog/tags/goagent/'>goagent</a>
+  
+</span>
+
+
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="tag">
+
+
+<div class="entry-content"><p>
+代码如下<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup>，
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-tcl"><span style="color: #999988; font-style: italic;">#</span><span style="color: #999988; font-style: italic;">! /usr/bin/expect -f</span>
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">timeout</span> 60
+
+<span style="color: #a020f0; font-weight: bold;">if</span> {$<span style="color: #0086b3;">argc</span> != 2} {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">scriptname</span> [<span style="color: #483d8b;">lindex</span> [<span style="color: #483d8b;">split</span> $<span style="color: #0086b3;">argv0</span> <span style="color: #dd1144;">"/"</span>] end]
+    send_user <span style="color: #dd1144;">"Usage: $scriptname \"APPID01|APPID02..\" &lt;email&gt;\n"</span>
+    <span style="color: #a020f0; font-weight: bold;">exit</span>
+}
+
+<span style="color: #a020f0; font-weight: bold;">proc</span> <span style="color: #990000;">getpass</span> pwprompt {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">oldmode</span> [stty -echo -raw]
+    send_user <span style="color: #dd1144;">"\n$pwprompt"</span>
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">timeout</span> -1
+    expect_user -re <span style="color: #dd1144;">"(.*)\n"</span>
+    send_user <span style="color: #dd1144;">"\n"</span>
+    <span style="color: #a020f0; font-weight: bold;">eval</span> stty $<span style="color: #0086b3;">oldmode</span>
+    <span style="color: #a020f0; font-weight: bold;">return</span> $<span style="color: #0086b3;">expect_out</span>(1,<span style="color: #483d8b;">string</span>)
+}
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appids</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 0]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appidlist</span> [<span style="color: #483d8b;">split</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 0] <span style="color: #dd1144;">"|"</span>]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">email</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 1]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">password</span> [getpass <span style="color: #dd1144;">"Please enter password: "</span>]
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">python</span> <span style="color: #dd1144;">"python2"</span>
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">uploader</span> <span style="color: #dd1144;">"/usr/share/goagent/server/uploader.zip"</span>
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">command</span> <span style="color: #dd1144;">"$python $uploader"</span>
+
+spawn $<span style="color: #0086b3;">python</span> $<span style="color: #0086b3;">uploader</span>
+expect -nocase <span style="color: #dd1144;">"appid:"</span> {send <span style="color: #dd1144;">"$appids\r"</span>}
+<span style="color: #a020f0; font-weight: bold;">for</span> {<span style="color: #483d8b;">set</span> i 0} {$<span style="color: #0086b3;">i</span> &lt; [<span style="color: #483d8b;">llength</span> $<span style="color: #0086b3;">appidlist</span>]} {<span style="color: #483d8b;">incr</span> i} {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appid</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">appidlist</span> $<span style="color: #0086b3;">i</span>]
+    expect -nocase <span style="color: #dd1144;">"application:"</span> {send_user <span style="color: #dd1144;">"\n\n==&gt; Setup up appid: $appid"</span>}
+    expect -nocase <span style="color: #dd1144;">"email:"</span> {send <span style="color: #dd1144;">"$email\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"password for"</span> {send <span style="color: #dd1144;">"$password\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"email:"</span> {send <span style="color: #dd1144;">"$email\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"password for"</span> {send <span style="color: #dd1144;">"$password\r"</span>}
+}
+
+expect <span style="color: #dd1144;">"&#19978;&#20256;&#25104;&#21151;"</span> {send <span style="color: #dd1144;">"\r"</span>}
+interact
+</pre>
+</div>
 
 
 
-  
-  <h2>2013</h2>
 
-<article>
-  
-<h1><a href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html">设置 org-mode 导出为 html 时的代码高亮风格</a></h1>
-<time datetime="2013-10-06T18:06:00+08:00" pubdate><span class='month'>Oct</span> <span class='day'>06</span> <span class='year'>2013</span></time>
-
-<footer>
-    
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/q-a/'>Q_A</a>, <a class='tag' href='/blog/tags/export/'>export</a>, <a class='tag' href='/blog/tags/html/'>html</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
+<p>
+使用方法很简单，运行脚本，而后输入密码即可：
+</p>
 
 
-</footer>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo ./expect_goagent.tcl <span style="color: #dd1144;">"appid01|appid02"</span> your@gmail.com
+</pre>
+</div>
 
 
-</article>
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
+<a href="https://gist.github.com/fasheng/7040434">https://gist.github.com/fasheng/7040434</a>
+</p></div>
 
 
-
-<article>
-  
-<h1><a href="/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板</a></h1>
-<time datetime="2013-09-26T13:17:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>26</span> <span class='year'>2013</span></time>
-
-<footer>
-    
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/latex/'>latex</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
-
-
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html">org-mode 导出 html 时中文空格问题的临时解决方法</a></h1>
-<time datetime="2013-09-25T16:51:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>25</span> <span class='year'>2013</span></time>
-
-<footer>
-    
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/q-a/'>Q_A</a>, <a class='tag' href='/blog/tags/export/'>export</a>, <a class='tag' href='/blog/tags/html/'>html</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
-
-
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013-09-12-Experimental-post-for-org-mode-under-octopress.html">Experimental post for org-mode under octopress</a></h1>
-<time datetime="2013-09-12T18:18:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>12</span> <span class='year'>2013</span></time>
-
-<footer>
-    
-
-<span class="categories">
-  
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/octopress/'>octopress</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
-  
-</span>
-
-
-</footer>
-
-
-</article>
+</div>
+</div>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Xu FaSheng</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-18T19:44:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2013</time>
+    </p>
+    
+      <div class="sharing">
+  
+    <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+    <a class="jiathis_button_googleplus"></a>
+    <a class="jiathis_button_douban"></a>
+    <a class="jiathis_button_tsina"></a>
+    <a class="jiathis_button_renren"></a>
+    <a class="jiathis_button_tsohu"></a>
+    <a class="jiathis_button_tieba"></a>
+    <a href="http://www.jiathis.com/share?uid=1814751" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+data_track_clickback:true,
+                     summary:"",
+                     shortUrl:true,
+                     hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1814751" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+   
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html" title="Previous Post: 设置 org-mode 导出为 html 时的代码高亮风格">&laquo; 设置 org-mode 导出为 html 时的代码高亮风格</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -308,7 +388,10 @@
       var disqus_shortname = 'fashengblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fasheng.github.io/blog/2013-10-18-speed-up-setup-for-goagent-through-expect.html';
+        var disqus_url = 'http://fasheng.github.io/blog/2013-10-18-speed-up-setup-for-goagent-through-expect.html';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[fasheng的博客]]></title>
   <link href="http://fasheng.github.io/atom.xml" rel="self"/>
   <link href="http://fasheng.github.io/"/>
-  <updated>2013-10-17T15:44:45+08:00</updated>
+  <updated>2013-10-18T19:59:29+08:00</updated>
   <id>http://fasheng.github.io/</id>
   <author>
     <name><![CDATA[Xu FaSheng]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[利用 expect 简化 goagent 配置过程]]></title>
+    <link href="http://fasheng.github.io/blog/2013-10-18-speed-up-setup-for-goagent-through-expect.html"/>
+    <updated>2013-10-18T19:44:00+08:00</updated>
+    <id>http://fasheng.github.io/blog/speed-up-setup-for-goagent-through-expect</id>
+    <content type="html"><![CDATA[<p>
+代码如下<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup>，
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-tcl"><span style="color: #999988; font-style: italic;">#</span><span style="color: #999988; font-style: italic;">! /usr/bin/expect -f</span>
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">timeout</span> 60
+
+<span style="color: #a020f0; font-weight: bold;">if</span> {$<span style="color: #0086b3;">argc</span> != 2} {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">scriptname</span> [<span style="color: #483d8b;">lindex</span> [<span style="color: #483d8b;">split</span> $<span style="color: #0086b3;">argv0</span> <span style="color: #dd1144;">"/"</span>] end]
+    send_user <span style="color: #dd1144;">"Usage: $scriptname \"APPID01|APPID02..\" &lt;email&gt;\n"</span>
+    <span style="color: #a020f0; font-weight: bold;">exit</span>
+}
+
+<span style="color: #a020f0; font-weight: bold;">proc</span> <span style="color: #990000;">getpass</span> pwprompt {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">oldmode</span> [stty -echo -raw]
+    send_user <span style="color: #dd1144;">"\n$pwprompt"</span>
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">timeout</span> -1
+    expect_user -re <span style="color: #dd1144;">"(.*)\n"</span>
+    send_user <span style="color: #dd1144;">"\n"</span>
+    <span style="color: #a020f0; font-weight: bold;">eval</span> stty $<span style="color: #0086b3;">oldmode</span>
+    <span style="color: #a020f0; font-weight: bold;">return</span> $<span style="color: #0086b3;">expect_out</span>(1,<span style="color: #483d8b;">string</span>)
+}
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appids</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 0]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appidlist</span> [<span style="color: #483d8b;">split</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 0] <span style="color: #dd1144;">"|"</span>]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">email</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">argv</span> 1]
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">password</span> [getpass <span style="color: #dd1144;">"Please enter password: "</span>]
+
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">python</span> <span style="color: #dd1144;">"python2"</span>
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">uploader</span> <span style="color: #dd1144;">"/usr/share/goagent/server/uploader.zip"</span>
+<span style="color: #483d8b;">set</span> <span style="color: #0086b3;">command</span> <span style="color: #dd1144;">"$python $uploader"</span>
+
+spawn $<span style="color: #0086b3;">python</span> $<span style="color: #0086b3;">uploader</span>
+expect -nocase <span style="color: #dd1144;">"appid:"</span> {send <span style="color: #dd1144;">"$appids\r"</span>}
+<span style="color: #a020f0; font-weight: bold;">for</span> {<span style="color: #483d8b;">set</span> i 0} {$<span style="color: #0086b3;">i</span> &lt; [<span style="color: #483d8b;">llength</span> $<span style="color: #0086b3;">appidlist</span>]} {<span style="color: #483d8b;">incr</span> i} {
+    <span style="color: #483d8b;">set</span> <span style="color: #0086b3;">appid</span> [<span style="color: #483d8b;">lindex</span> $<span style="color: #0086b3;">appidlist</span> $<span style="color: #0086b3;">i</span>]
+    expect -nocase <span style="color: #dd1144;">"application:"</span> {send_user <span style="color: #dd1144;">"\n\n==&gt; Setup up appid: $appid"</span>}
+    expect -nocase <span style="color: #dd1144;">"email:"</span> {send <span style="color: #dd1144;">"$email\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"password for"</span> {send <span style="color: #dd1144;">"$password\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"email:"</span> {send <span style="color: #dd1144;">"$email\r"</span>}
+    expect -nocase <span style="color: #dd1144;">"password for"</span> {send <span style="color: #dd1144;">"$password\r"</span>}
+}
+
+expect <span style="color: #dd1144;">"&#19978;&#20256;&#25104;&#21151;"</span> {send <span style="color: #dd1144;">"\r"</span>}
+interact
+</pre>
+</div>
+
+
+
+
+<p>
+使用方法很简单，运行脚本，而后输入密码即可：
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo ./expect_goagent.tcl <span style="color: #dd1144;">"appid01|appid02"</span> your@gmail.com
+</pre>
+</div>
+
+
+<div id="footnotes">
+<h2 class="footnotes">&#33050;&#27880;: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
+<a href="https://gist.github.com/fasheng/7040434">https://gist.github.com/fasheng/7040434</a>
+</p></div>
+
+
+</div>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[设置 org-mode 导出为 html 时的代码高亮风格]]></title>
