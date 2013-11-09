@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>分享一款适用于 org-mode 的简洁风 LaTeX 简历模板 - fasheng的博客</title>
+  <title>利用 Pycairo 为图片添加阴影特效 - fasheng的博客</title>
   <meta name="author" content="Xu FaSheng">
 
   
-  <meta name="description" content="使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料[1], [2]编写了一个简单的简历模板，源码可以到这里找到，下面是使用示例及对应 pdf 文件。 #+ &hellip;">
+  <meta name="description" content="为图片添加阴影特效并不复杂，因为图片多是矩形，我们首先实现一个绘制
+rectangle gradient 的函数，其中四个边角利用 radial gradient（径向渐变，
+这里 有一个示例）绘制，剩下四条边用 linear gradient（线性渐变）绘制，代码如下: def &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fasheng.github.io/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html">
+  <link rel="canonical" href="http://fasheng.github.io/blog/2013-11-08-add-shadow-effect-for-a-picture-through-pycairo.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="fasheng的博客" type="application/atom+xml">
@@ -90,7 +91,7 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
   <header>
     
-      <h1 class="entry-title">分享一款适用于 org-mode 的简洁风 LaTeX 简历模板</h1>
+      <h1 class="entry-title">利用 Pycairo 为图片添加阴影特效</h1>
     
     
       <p class="meta">
@@ -106,7 +107,7 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
   
 
 
-<time datetime="2013-09-26T13:17:00+08:00" pubdate data-updated="true">Sep 26<span>th</span>, 2013</time>
+<time datetime="2013-11-08T16:52:00+08:00" pubdate data-updated="true">Nov 8<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -115,8 +116,8 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 <span class="categories">
   
-    posted in <a class='category' href='/blog/categories/dai-ma/'>代码</a>
-    with tag <a class='tag' href='/blog/tags/latex/'>latex</a>, <a class='tag' href='/blog/tags/org-mode/'>org_mode</a>
+    posted in <a class='category' href='/blog/categories/dai-ma-tu-xing-xue/'>代码_图形学</a>
+    with tag <a class='tag' href='/blog/tags/cairo/'>cairo</a>, <a class='tag' href='/blog/tags/shi-li/'>示例</a>
   
 </span>
 
@@ -128,8 +129,9 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 
 <div class="entry-content"><p>
-使用 org-mode 导出 LaTeX 简历对我个人而言还是有一定吸引力的，原因之一是
-org-mode 同时还可以导出为 html 文件，使得应用范围变得更广。于是自己参考了一些网上资料<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup><sup>, </sup><sup>[<a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a>]</sup>编写了一个简单的简历模板，源码可以到<a href="https://github.com/fasheng/fsh_orgmode_latex_cv">这里</a>找到，下面是使用示例及对应 pdf 文件。
+为图片添加阴影特效并不复杂，因为图片多是矩形，我们首先实现一个绘制
+rectangle gradient 的函数，其中四个边角利用 radial gradient（径向渐变，
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_cairo_radial_gradient">这里</a> 有一个示例）绘制，剩下四条边用 linear gradient（线性渐变）绘制，代码如下:
 </p>
 
 
@@ -137,23 +139,82 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 <div class="org-src-container">
 
-<pre class="src src-org"><span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \usepackage{fsh_orgmode_cv}</span>
-<span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \usepackage{xltxtra,fontspec,xunicode,xeCJK}</span>
-<span style="color: #999988; font-style: italic;">#+LaTeX_HEADER: \setCJKmainfont{AR PL New Kai}</span>
+<pre class="src src-python"><span style="color: #a020f0; font-weight: bold;">def</span> <span style="color: #990000;">do_draw_rectangle_gradient</span>(cr, width, height, radius,
+                               color_stops=((0.0, 0.1, 0.1, 0.1, 1.0),
+                                            (1.0, 0.6, 0.6, 0.6, 1.0))):
+    <span style="color: #a020f0; font-weight: bold;">if</span> width &lt; 2 * radius:
+        <span style="color: #0086b3;">width</span> = 2 * radius
+    <span style="color: #a020f0; font-weight: bold;">if</span> height &lt; 2 * radius:
+        <span style="color: #0086b3;">height</span> = 2 * radius
 
-<span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">&#20010;&#20154;&#31616;&#21382;</span>
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">radial gradient center points for four corners, top-left, top-right, etc</span>
+    <span style="color: #0086b3;">corner_tl</span> = (radius, radius)
+    <span style="color: #0086b3;">corner_tr</span> = (width - radius, radius)
+    <span style="color: #0086b3;">corner_bl</span> = (radius, height - radius)
+    <span style="color: #0086b3;">corner_br</span> = (width - radius, height - radius)
+    <span style="color: #0086b3;">corner_points</span> = (corner_tl, corner_tr, corner_br, corner_bl)
 
-<span style="color: #990000;">* &#31034;&#20363; &#19968;&#32423;&#26631;&#39064;</span>
-<span style="color: #0086b3;">** &#20108;&#32423;&#26631;&#39064;</span>
-   *&#20108;&#32423;&#27491;&#25991;*
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">linear gradient rectangle info for four sides</span>
+    <span style="color: #0086b3;">side_top</span> = (radius, 0, width - 2 * radius, radius)
+    <span style="color: #0086b3;">side_bottom</span> = (radius, height - radius, width - 2 * radius, radius)
+    <span style="color: #0086b3;">side_left</span> = (0, radius, radius, height - 2 * radius)
+    <span style="color: #0086b3;">side_right</span> = (width - radius, radius, radius, height - 2 * radius)
 
-   &#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">draw four corners through radial gradient</span>
+    <span style="color: #0086b3;">i</span> = 0
+    <span style="color: #a020f0; font-weight: bold;">for</span> point <span style="color: #a020f0; font-weight: bold;">in</span> corner_points:
+        <span style="color: #0086b3;">rg</span> = cairo.RadialGradient(point[0], point[1], 0, point[0], point[1], radius)
+        <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+            <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+                rg.add_color_stop_rgba(*stop)
+        cr.move_to(point[0], point[1])
+        <span style="color: #0086b3;">angle1</span> = math.pi + 0.5 * math.pi * i
+        <span style="color: #0086b3;">angle2</span> = angle1 + 0.5 * math.pi
+        cr.arc(point[0], point[1], radius, angle1, angle2)
+        cr.set_source(rg)
+        cr.fill()
+        <span style="color: #0086b3;">i</span> = i + 1
 
-<span style="color: #0086b3;">** &#20108;&#32423;&#26631;&#39064;</span>
-   *&#20108;&#32423;&#27491;&#25991;*
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">draw four sides through linear gradient</span>
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">top side</span>
+    <span style="color: #0086b3;">lg_top</span> = cairo.LinearGradient(side_top[0], side_top[1] + radius,
+                                  side_top[0], side_top[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_top.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_top)
+    cr.set_source(lg_top)
+    cr.fill()
 
-   &#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;
-   &#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;&#27491;&#25991;
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">bottom side</span>
+    <span style="color: #0086b3;">lg_bottom</span> = cairo.LinearGradient(side_bottom[0], side_bottom[1],
+                                     side_bottom[0], side_bottom[1] + radius)
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_bottom.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_bottom)
+    cr.set_source(lg_bottom)
+    cr.fill()
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">left side</span>
+    <span style="color: #0086b3;">lg_left</span> = cairo.LinearGradient(side_left[0] + radius,
+                                   side_left[1], side_left[0], side_left[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_left.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_left)
+    cr.set_source(lg_left)
+    cr.fill()
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">right side</span>
+    <span style="color: #0086b3;">lg_right</span> = cairo.LinearGradient(side_right[0], side_right[1],
+                                    side_right[0] + radius, side_right[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_right.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_right)
+    cr.set_source(lg_right)
+    cr.fill()
 </pre>
 </div>
 
@@ -161,24 +222,48 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
 
 
 <p>
-<a href="../downloads/20130926_demo_resume_cn.pdf">示例 pdf 下载</a>
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_pycairo_rectangle_gradient">这里</a> 是完整代码, 程序截图如下,
 </p>
 
 
-<div id="footnotes">
-<h2 class="footnotes">&#33050;&#27880;: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup>[<a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a>]</sup> <p class="footpara">
-<a href="https://github.com/punchagan/resume">https://github.com/punchagan/resume</a>
-</p></div>
-
-<div class="footdef"><sup>[<a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a>]</sup> <p class="footpara">
-<a href="http://www.latextemplates.com/template/plasmati-graduate-cv">http://www.latextemplates.com/template/plasmati-graduate-cv</a>
-</p></div>
 
 
+<div class="figure">
+<p><img src="../images_post/20131108-demo_pycairo_rectangle_gradient.png" alt="20131108-demo_pycairo_rectangle_gradient.png" title="demo pycairo rectangle gradient" width="60%" height="60%" />
+</p>
+<p><span class="figure-number">&#22270;1&nbsp;</span> demo pycairo rectangle gradient</p>
 </div>
+
+
+
+
+<p>
+但仅仅如此还不行，为了让阴影效果最佳，还要用 bezier curve（贝塞尔曲线）来设置 color stop（颜色渐变规则），这里使用下面的曲线形式，其中X轴为
+offset（偏移量，取值范围为 0~1，0 代表阴影绘制起点），Y轴为 alpha（颜色透明度，取值范围为0~1，0 代表完全透明），
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="../images_autogen/20131108-matplot_bezier.png" alt="20131108-matplot_bezier.png" />
+</p>
+</div>
+
+
+
+
+<p>
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_pycairo_image_shadow">这里</a> 是最终代码，程序截图如下，
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="../images_post/20131108-demo_pycairo_image_shadow.png" alt="20131108-demo_pycairo_image_shadow.png" title="demo pycairo image shadow" width="80%" height="80%" />
+</p>
+<p><span class="figure-number">&#22270;2&nbsp;</span> demo pycairo image shadow</p>
 </div>
 
 </div>
@@ -203,7 +288,7 @@ org-mode 同时还可以导出为 html 文件，使得应用范围变得更广�
   
 
 
-<time datetime="2013-09-26T13:17:00+08:00" pubdate data-updated="true">Sep 26<span>th</span>, 2013</time>
+<time datetime="2013-11-08T16:52:00+08:00" pubdate data-updated="true">Nov 8<span>th</span>, 2013</time>
     </p>
     
       <div class="sharing">
@@ -236,10 +321,8 @@ data_track_clickback:true,
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013-09-25-fix-chinese-space-issue-when-exporting-org-mode-to-html.html" title="Previous Post: org-mode 导出 html 时中文空格问题的临时解决方法">&laquo; org-mode 导出 html 时中文空格问题的临时解决方法</a>
+        <a class="basic-alignment left" href="/blog/2013-10-18-speed-up-setup-for-goagent-through-expect.html" title="Previous Post: 利用 expect 简化 goagent 配置过程">&laquo; 利用 expect 简化 goagent 配置过程</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013-10-06-change-code-color-style-when-publish-org-mode-to-html.html" title="Next Post: 设置 org-mode 导出为 html 时的代码高亮风格">设置 org-mode 导出为 html 时的代码高亮风格 &raquo;</a>
       
     </p>
   </footer>
@@ -370,8 +453,8 @@ data_track_clickback:true,
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://fasheng.github.io/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html';
-        var disqus_url = 'http://fasheng.github.io/blog/2013-09-26-share-a-simple-latex-resume-template-for-org-mode.html';
+        var disqus_identifier = 'http://fasheng.github.io/blog/2013-11-08-add-shadow-effect-for-a-picture-through-pycairo.html';
+        var disqus_url = 'http://fasheng.github.io/blog/2013-11-08-add-shadow-effect-for-a-picture-through-pycairo.html';
         var disqus_script = 'embed.js';
       
     (function () {

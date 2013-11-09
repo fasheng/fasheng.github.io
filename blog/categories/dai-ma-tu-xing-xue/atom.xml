@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 代码_图形学 | fasheng的博客]]></title>
+  <link href="http://fasheng.github.io/blog/categories/dai-ma-tu-xing-xue/atom.xml" rel="self"/>
+  <link href="http://fasheng.github.io/"/>
+  <updated>2013-11-09T10:37:47+08:00</updated>
+  <id>http://fasheng.github.io/</id>
+  <author>
+    <name><![CDATA[Xu FaSheng]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[利用 Pycairo 为图片添加阴影特效]]></title>
+    <link href="http://fasheng.github.io/blog/2013-11-08-add-shadow-effect-for-a-picture-through-pycairo.html"/>
+    <updated>2013-11-08T16:52:00+08:00</updated>
+    <id>http://fasheng.github.io/blog/add-shadow-effect-for-a-picture-through-pycairo</id>
+    <content type="html"><![CDATA[<p>
+为图片添加阴影特效并不复杂，因为图片多是矩形，我们首先实现一个绘制
+rectangle gradient 的函数，其中四个边角利用 radial gradient（径向渐变，
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_cairo_radial_gradient">这里</a> 有一个示例）绘制，剩下四条边用 linear gradient（线性渐变）绘制，代码如下:
+</p>
+
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #a020f0; font-weight: bold;">def</span> <span style="color: #990000;">do_draw_rectangle_gradient</span>(cr, width, height, radius,
+                               color_stops=((0.0, 0.1, 0.1, 0.1, 1.0),
+                                            (1.0, 0.6, 0.6, 0.6, 1.0))):
+    <span style="color: #a020f0; font-weight: bold;">if</span> width &lt; 2 * radius:
+        <span style="color: #0086b3;">width</span> = 2 * radius
+    <span style="color: #a020f0; font-weight: bold;">if</span> height &lt; 2 * radius:
+        <span style="color: #0086b3;">height</span> = 2 * radius
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">radial gradient center points for four corners, top-left, top-right, etc</span>
+    <span style="color: #0086b3;">corner_tl</span> = (radius, radius)
+    <span style="color: #0086b3;">corner_tr</span> = (width - radius, radius)
+    <span style="color: #0086b3;">corner_bl</span> = (radius, height - radius)
+    <span style="color: #0086b3;">corner_br</span> = (width - radius, height - radius)
+    <span style="color: #0086b3;">corner_points</span> = (corner_tl, corner_tr, corner_br, corner_bl)
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">linear gradient rectangle info for four sides</span>
+    <span style="color: #0086b3;">side_top</span> = (radius, 0, width - 2 * radius, radius)
+    <span style="color: #0086b3;">side_bottom</span> = (radius, height - radius, width - 2 * radius, radius)
+    <span style="color: #0086b3;">side_left</span> = (0, radius, radius, height - 2 * radius)
+    <span style="color: #0086b3;">side_right</span> = (width - radius, radius, radius, height - 2 * radius)
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">draw four corners through radial gradient</span>
+    <span style="color: #0086b3;">i</span> = 0
+    <span style="color: #a020f0; font-weight: bold;">for</span> point <span style="color: #a020f0; font-weight: bold;">in</span> corner_points:
+        <span style="color: #0086b3;">rg</span> = cairo.RadialGradient(point[0], point[1], 0, point[0], point[1], radius)
+        <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+            <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+                rg.add_color_stop_rgba(*stop)
+        cr.move_to(point[0], point[1])
+        <span style="color: #0086b3;">angle1</span> = math.pi + 0.5 * math.pi * i
+        <span style="color: #0086b3;">angle2</span> = angle1 + 0.5 * math.pi
+        cr.arc(point[0], point[1], radius, angle1, angle2)
+        cr.set_source(rg)
+        cr.fill()
+        <span style="color: #0086b3;">i</span> = i + 1
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">draw four sides through linear gradient</span>
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">top side</span>
+    <span style="color: #0086b3;">lg_top</span> = cairo.LinearGradient(side_top[0], side_top[1] + radius,
+                                  side_top[0], side_top[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_top.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_top)
+    cr.set_source(lg_top)
+    cr.fill()
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">bottom side</span>
+    <span style="color: #0086b3;">lg_bottom</span> = cairo.LinearGradient(side_bottom[0], side_bottom[1],
+                                     side_bottom[0], side_bottom[1] + radius)
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_bottom.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_bottom)
+    cr.set_source(lg_bottom)
+    cr.fill()
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">left side</span>
+    <span style="color: #0086b3;">lg_left</span> = cairo.LinearGradient(side_left[0] + radius,
+                                   side_left[1], side_left[0], side_left[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_left.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_left)
+    cr.set_source(lg_left)
+    cr.fill()
+
+    <span style="color: #999988; font-style: italic;"># </span><span style="color: #999988; font-style: italic;">right side</span>
+    <span style="color: #0086b3;">lg_right</span> = cairo.LinearGradient(side_right[0], side_right[1],
+                                    side_right[0] + radius, side_right[1])
+    <span style="color: #a020f0; font-weight: bold;">for</span> stop <span style="color: #a020f0; font-weight: bold;">in</span> color_stops:
+        <span style="color: #a020f0; font-weight: bold;">if</span> stop:
+            lg_right.add_color_stop_rgba(*stop)
+    cr.rectangle(*side_right)
+    cr.set_source(lg_right)
+    cr.fill()
+</pre>
+</div>
+
+
+
+
+<p>
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_pycairo_rectangle_gradient">这里</a> 是完整代码, 程序截图如下,
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="../images_post/20131108-demo_pycairo_rectangle_gradient.png" alt="20131108-demo_pycairo_rectangle_gradient.png" title="demo pycairo rectangle gradient" width="60%" height="60%" />
+</p>
+<p><span class="figure-number">&#22270;1&nbsp;</span> demo pycairo rectangle gradient</p>
+</div>
+
+
+
+
+<p>
+但仅仅如此还不行，为了让阴影效果最佳，还要用 bezier curve（贝塞尔曲线）来设置 color stop（颜色渐变规则），这里使用下面的曲线形式，其中X轴为
+offset（偏移量，取值范围为 0~1，0 代表阴影绘制起点），Y轴为 alpha（颜色透明度，取值范围为0~1，0 代表完全透明），
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="../images_autogen/20131108-matplot_bezier.png" alt="20131108-matplot_bezier.png" />
+</p>
+</div>
+
+
+
+
+<p>
+<a href="https://github.com/fasheng/fshdemo/tree/master/demo_pycairo_image_shadow">这里</a> 是最终代码，程序截图如下，
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="../images_post/20131108-demo_pycairo_image_shadow.png" alt="20131108-demo_pycairo_image_shadow.png" title="demo pycairo image shadow" width="80%" height="80%" />
+</p>
+<p><span class="figure-number">&#22270;2&nbsp;</span> demo pycairo image shadow</p>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
