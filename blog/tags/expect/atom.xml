@@ -4,7 +4,7 @@
   <title><![CDATA[Tags: expect | fasheng的博客]]></title>
   <link href="http://fasheng.github.io/blog/tags/expect/atom.xml" rel="self"/>
   <link href="http://fasheng.github.io/"/>
-  <updated>2013-11-09T14:52:08+08:00</updated>
+  <updated>2013-11-10T16:16:53+08:00</updated>
   <id>http://fasheng.github.io/</id>
   <author>
     <name><![CDATA[Xu FaSheng]]></name>
@@ -19,7 +19,7 @@
     <updated>2013-10-18T19:44:00+08:00</updated>
     <id>http://fasheng.github.io/blog/speed-up-setup-for-goagent-through-expect</id>
     <content type="html"><![CDATA[<p>
-代码如下<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup>，
+配置 goagent 过程中，若一次设置多个 APPID，则需要重复输入多次 gmail 和密码，较为繁琐，于是写了一个 expect 脚本来简化该过程，代码如下<sup>[<a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a>]</sup>，
 </p>
 
 
